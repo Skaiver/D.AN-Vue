@@ -3,13 +3,14 @@ import {defineComponent} from 'vue'
 
 export default defineComponent({
   props: {
-    open: {
+    isOpened: {
       type: Boolean,
       default: false
     },
   },
   data() {
     return {
+      dataIsOpened: false,
       form: {
         name: "",
         year: "",
@@ -22,29 +23,27 @@ export default defineComponent({
     this.name = "ABC"
     this.year = "1"
     this.text = "nichts"
+    this.dataIsOpened = this.isOpened;
   },
   mounted() {
-    console.log(this)
   },
 
   watch: {
-    open(newValue, oldValue) {
-      console.log(this.open)
-      if (newValue === true) {
-        this.showModal();
-      }
-      if (newValue === false) {
-        this.submit();
-        this.hideModal();
-      }
-
+    isOpened(newValue, oldValue) {
+      if(newValue === oldValue) return;
+      console.log("new: ",newValue)
+      this.dataIsOpened = newValue;
     },
   },
 
-  // computed = wird immer wieder ausgewertet -> ohne () im FE
   computed: {},
-
   methods: {
+    handleFocusOut() {
+      console.log(this.dataIsOpened)
+      if(this.dataIsOpened) {
+        this.hideModal();
+      }
+    },
     showModal() {
       document.querySelector('dialog')?.setAttribute("open", "");
     },
@@ -52,12 +51,12 @@ export default defineComponent({
       document.querySelector('dialog')?.removeAttribute("open",);
     },
     toggleModal() {
-      document.querySelector('dialog').toggleAttribute("open");
+      this.dataIsOpened = !this.dataIsOpened;
     },
     getCurrentFormValues() {
       console.log(this.form)
     },
-    submit(){
+    submit() {
       // stuff here
     }
   }
@@ -65,7 +64,7 @@ export default defineComponent({
 </script>
 
 <template>
-  <dialog>
+  <dialog :open="isOpened" v-click-outside="handleFocusOut">
     <label for="name">Name</label>
     <input type="text" name="name" id="name" v-model="form.name" placeholder="Namen hier eingeben...">
 
