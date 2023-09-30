@@ -2,6 +2,7 @@
 import {defineComponent} from 'vue'
 
 export default defineComponent({
+  emits: ['close-modal'],
   props: {
     isOpened: {
       type: Boolean,
@@ -10,7 +11,7 @@ export default defineComponent({
   },
   data() {
     return {
-      dataIsOpened: false,
+      dataKey: 0,
       form: {
         name: "",
         year: "",
@@ -23,35 +24,29 @@ export default defineComponent({
     this.name = "ABC"
     this.year = "1"
     this.text = "nichts"
-    this.dataIsOpened = this.isOpened;
   },
   mounted() {
   },
+  updated() {
+  },
 
   watch: {
-    isOpened(newValue, oldValue) {
-      if(newValue === oldValue) return;
-      console.log("new: ",newValue)
-      this.dataIsOpened = newValue;
+    key(newValue, oldValue) {
+      if (newValue === oldValue) return;
+      this.dataKey = newValue;
     },
   },
 
   computed: {},
   methods: {
     handleFocusOut() {
-      console.log(this.dataIsOpened)
-      if(this.dataIsOpened) {
-        this.hideModal();
+      console.log(this.isOpened)
+      if (this.isOpened) {
+        this.$emit('close-modal', this.isOpened);
       }
     },
     showModal() {
       document.querySelector('dialog')?.setAttribute("open", "");
-    },
-    hideModal() {
-      document.querySelector('dialog')?.removeAttribute("open",);
-    },
-    toggleModal() {
-      this.dataIsOpened = !this.dataIsOpened;
     },
     getCurrentFormValues() {
       console.log(this.form)
@@ -64,7 +59,7 @@ export default defineComponent({
 </script>
 
 <template>
-  <dialog :open="isOpened" v-click-outside="handleFocusOut">
+  <dialog v-bind:open="isOpened" v-click-outside="handleFocusOut">
     <label for="name">Name</label>
     <input type="text" name="name" id="name" v-model="form.name" placeholder="Namen hier eingeben...">
 

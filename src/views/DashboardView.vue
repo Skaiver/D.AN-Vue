@@ -11,29 +11,29 @@ export default defineComponent({
   },
   data() {
     return {
+      componentKey: 0,
       isModalOpened: false,
     }
   },
   created() {
 
   },
-  computed: {
-    evalIsModalOpened() {
-      console.log(this.isModalOpened, "eval")
-      if (this.isModalOpened) {
-        return true;
-      }
-      return false;
-    }
-  },
+  computed: {},
   methods: {
+    forceRerender() {
+      console.log("ff")
+      this.componentKey += 1;
+    },
     toggleModal() {
       this.isModalOpened = !this.isModalOpened;
-      this.evalIsModalOpened(this.isModalOpened);
-      // TODO wtf -> how to make Modal make update/re-render when var updates
     },
     openModal() {
       this.isModalOpened = true;
+    },
+    closeModal() {
+      console.log("view: closing modal!")
+      this.isModalOpened = true;
+      this.forceRerender();
     }
   },
 });
@@ -41,7 +41,11 @@ export default defineComponent({
 
 <template>
   <main>
-    <Modal :isOpened="evalIsModalOpened"/>
+    <Modal
+        :key="componentKey"
+        v-bind:isOpened="isModalOpened"
+        @close-modal="closeModal()"
+    />
     <button @click="toggleModal()">Öffne Modal</button>
 
     <MonthListing
