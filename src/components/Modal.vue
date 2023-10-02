@@ -37,12 +37,16 @@ export default defineComponent({
     },
   },
 
-  computed: {},
+  computed: {
+    getIsOpened() {
+      return this.isOpened;
+    }
+  },
   methods: {
     handleFocusOut() {
-      console.log(this.isOpened)
-      if (this.isOpened) {
-        this.$emit('close-modal', this.isOpened);
+      console.log(this.getIsOpened)
+      if (this.getIsOpened) {
+        this.$emit('close-modal', [this.getIsOpened]);
       }
     },
     showModal() {
@@ -59,7 +63,7 @@ export default defineComponent({
 </script>
 
 <template>
-  <dialog v-bind:open="isOpened" v-click-outside="handleFocusOut">
+  <dialog v-bind:open="getIsOpened ? true : null" v-click-outside="handleFocusOut">
     <label for="name">Name</label>
     <input type="text" name="name" id="name" v-model="form.name" placeholder="Namen hier eingeben...">
 

@@ -30,9 +30,9 @@ export default defineComponent({
     openModal() {
       this.isModalOpened = true;
     },
-    closeModal() {
-      console.log("view: closing modal!")
-      this.isModalOpened = true;
+    closeModal(args) {
+      console.log("view: closing modal!", args)
+      this.isModalOpened = false;
       this.forceRerender();
     }
   },
@@ -44,7 +44,7 @@ export default defineComponent({
     <Modal
         :key="componentKey"
         v-bind:isOpened="isModalOpened"
-        @close-modal="closeModal()"
+        @close-modal="closeModal(args)"
     />
     <button @click="toggleModal()">Öffne Modal</button>
 
