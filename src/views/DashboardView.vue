@@ -18,7 +18,11 @@ export default defineComponent({
   created() {
 
   },
-  computed: {},
+  computed: {
+    getIsModalOpened(){
+      return this.isModalOpened;
+    }
+  },
   methods: {
     forceRerender() {
       console.log("ff")
@@ -30,9 +34,9 @@ export default defineComponent({
     openModal() {
       this.isModalOpened = true;
     },
-    closeModal(args) {
-      console.log("view: closing modal!", args)
+    closeModal() {
       this.isModalOpened = false;
+      console.log("view: closing modal!")
       this.forceRerender();
     }
   },
@@ -43,8 +47,8 @@ export default defineComponent({
   <main>
     <Modal
         :key="componentKey"
-        v-bind:isOpened="isModalOpened"
-        @close-modal="closeModal(args)"
+        :isOpened="getIsModalOpened"
+        @close-modal="closeModal()"
     />
     <button @click="toggleModal()">Öffne Modal</button>
 

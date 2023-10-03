@@ -31,7 +31,7 @@ export default defineComponent({
   },
 
   watch: {
-    key(newValue, oldValue) {
+    isOpened(newValue, oldValue) {
       if (newValue === oldValue) return;
       this.dataKey = newValue;
     },
@@ -43,10 +43,10 @@ export default defineComponent({
     }
   },
   methods: {
-    handleFocusOut() {
-      console.log(this.getIsOpened)
-      if (this.getIsOpened) {
-        this.$emit('close-modal', [this.getIsOpened]);
+    handleFocusOut(el) {
+      console.log(this.getIsOpened, el)
+      if (el.getAttribute("open") !== null) {
+        this.$emit('close-modal');
       }
     },
     showModal() {
