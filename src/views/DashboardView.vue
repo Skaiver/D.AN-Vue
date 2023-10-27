@@ -1,6 +1,7 @@
 <script lang="ts">
 import Modal from "@/components/Modal.vue";
 import MonthListing from "@/components/MonthListing.vue";
+import EventBus from "@/events/EventBus";
 
 import {defineComponent} from 'vue'
 
@@ -19,7 +20,7 @@ export default defineComponent({
 
   },
   computed: {
-    getIsModalOpened(){
+    getIsModalOpened() {
       return this.isModalOpened;
     }
   },
@@ -29,16 +30,14 @@ export default defineComponent({
       this.componentKey += 1;
     },
     toggleModal() {
-      this.isModalOpened = !this.isModalOpened;
-    },
-    openModal() {
-      this.isModalOpened = true;
-    },
-    closeModal() {
-      this.isModalOpened = false;
-      console.log("view: closing modal!")
+      if (this.isModalOpened) {
+        EventBus.trigger('Modal.closeDialog', 'penis');
+      } else {
+        EventBus.trigger('Modal.openDialog', 'penis');
+
+      }
       this.forceRerender();
-    }
+    },
   },
 });
 </script>
@@ -48,9 +47,8 @@ export default defineComponent({
     <Modal
         :key="componentKey"
         :isOpened="getIsModalOpened"
-        @close-modal="closeModal()"
     />
-    <button @click="toggleModal()">Öffne Modal</button>
+    <button @click="toggleModal()">Toggle Modal</button>
 
     <MonthListing
         :weeks="[

@@ -1,8 +1,8 @@
 <script lang="ts">
-import {defineComponent} from 'vue'
+import {defineComponent} from 'vue';
+import EventBus from "@/events/EventBus";
 
 export default defineComponent({
-  emits: ['close-modal'],
   props: {
     isOpened: {
       type: Boolean,
@@ -16,7 +16,8 @@ export default defineComponent({
         name: "",
         year: "",
         text: ""
-      }
+      },
+      dialog: null
     }
   },
 
@@ -24,10 +25,27 @@ export default defineComponent({
     this.name = "ABC"
     this.year = "1"
     this.text = "nichts"
+    console.log("1",this.$refs.dialog)
+
   },
   mounted() {
+    console.log("2",this.$refs.dialog)
+    // this.storeReference(this.$refs.dialog)
+
+    // EventBus.on('Modal.openDialog', (a) => {
+    //   console.log(this.$refs.dialog)
+    //   this.$refs.dialog.showModal();
+    // });
+
+    // EventBus.on('Modal.closeDialog', (a) => {
+    //   console.log("ppppenis",a)
+    //   this.$refs.dialog.close();
+    //
+    // });
   },
   updated() {
+    console.log("3",this.$refs.dialog)
+
   },
 
   watch: {
@@ -38,19 +56,15 @@ export default defineComponent({
   },
 
   computed: {
-    getIsOpened() {
-      return this.isOpened;
-    }
   },
   methods: {
-    handleFocusOut(el) {
-      console.log(this.getIsOpened, el)
-      if (el.getAttribute("open") !== null) {
-        this.$emit('close-modal');
+    storeReference(e) {
+      if(e) {
+        this.dialog = e;
       }
     },
-    showModal() {
-      document.querySelector('dialog')?.setAttribute("open", "");
+    clearReference() {
+      this.dialog = null;
     },
     getCurrentFormValues() {
       console.log(this.form)
@@ -63,7 +77,9 @@ export default defineComponent({
 </script>
 
 <template>
-  <dialog v-bind:open="getIsOpened ? true : null" v-click-outside="handleFocusOut">
+  <dialog ref="dialog">
+    <button autofocus>Close</button>
+
     <label for="name">Name</label>
     <input type="text" name="name" id="name" v-model="form.name" placeholder="Namen hier eingeben...">
 
@@ -106,5 +122,10 @@ dialog textarea {
   border: 1px solid black;
   padding: 2px;
   border-radius: 2px;
+}
+
+dialog::backdrop {
+  background-color: red;
+  opacity: 0.75;
 }
 </style>

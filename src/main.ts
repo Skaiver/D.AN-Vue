@@ -6,28 +6,13 @@ import { createPinia } from 'pinia'
 import App from './App.vue'
 import router from './router'
 
+import $bus from './events/EventBus';
+
 const app = createApp(App)
+
+app.config.globalProperties.$bus = $bus;
 
 app.use(createPinia())
 app.use(router)
 
-/*
- * Custom Directives
- */
-const clickOutsideDirective = {
-    beforeMount: (el, binding) => {
-        el.clickOutsideEvent = event => {
-            // here I check that click was outside the el and his children
-            if (!(el == event.target || el.contains(event.target))) {
-                // and if it did, call method provided in attribute value
-                binding.value(el);
-            }
-        };
-        document.addEventListener("click", el.clickOutsideEvent);
-    },
-    unmounted: el => {
-        document.removeEventListener("click", el.clickOutsideEvent);
-    },
-};
-app.directive("click-outside", clickOutsideDirective);
 app.mount('#app')
