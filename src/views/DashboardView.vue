@@ -36,7 +36,7 @@ export default defineComponent({
         EventBus.trigger('Modal.openDialog', 'penis');
 
       }
-      this.forceRerender();
+      // this.forceRerender();
     },
   },
 });
@@ -55,6 +55,7 @@ export default defineComponent({
             {id: 1, date: {start: '22-09-2023', end: '29-09-2023'}},
             {id: 2, date: {start: '15-09-2023', end: '22-09-2023'}}
             ]"
-        @open-modal="openModal"/>
+
+    />
   </main>
 </template>

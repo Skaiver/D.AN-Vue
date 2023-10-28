@@ -29,19 +29,18 @@ export default defineComponent({
 
   },
   mounted() {
-    console.log("2",this.$refs.dialog)
-    // this.storeReference(this.$refs.dialog)
+    // console.log("2",this.$refs.dialog)
 
-    // EventBus.on('Modal.openDialog', (a) => {
-    //   console.log(this.$refs.dialog)
-    //   this.$refs.dialog.showModal();
-    // });
+    EventBus.on('Modal.openDialog', (a) => {
+      console.log(this.$refs.dialog)
+      this.$refs.dialog.showModal();
+    });
 
-    // EventBus.on('Modal.closeDialog', (a) => {
-    //   console.log("ppppenis",a)
-    //   this.$refs.dialog.close();
-    //
-    // });
+    EventBus.on('Modal.closeDialog', (a) => {
+      console.log("ppppenis",a)
+      this.$refs.dialog.close();
+
+    });
   },
   updated() {
     console.log("3",this.$refs.dialog)
@@ -66,6 +65,9 @@ export default defineComponent({
     clearReference() {
       this.dialog = null;
     },
+    closeModal() {
+      EventBus.trigger('Modal.closeDialog', 'penis');
+    },
     getCurrentFormValues() {
       console.log(this.form)
     },
@@ -78,7 +80,7 @@ export default defineComponent({
 
 <template>
   <dialog ref="dialog">
-    <button autofocus>Close</button>
+    <button @click="closeModal()" autofocus>Close</button>
 
     <label for="name">Name</label>
     <input type="text" name="name" id="name" v-model="form.name" placeholder="Namen hier eingeben...">
@@ -88,6 +90,9 @@ export default defineComponent({
 
     <label for="text">Inhalt</label>
     <textarea name="text" id="text" v-model="form.text" placeholder="Inhalte hier..."></textarea>
+
+    <label for="name">Abteilung</label>
+    <input type="text" name="department" id="department" v-model="form.department" placeholder="Abteilung hier eingeben...">
 
 
   </dialog>
