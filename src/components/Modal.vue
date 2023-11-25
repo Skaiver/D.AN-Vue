@@ -1,81 +1,49 @@
-<script lang="ts">
-import {defineComponent} from 'vue';
+<script setup lang="ts">
+import {ref, onMounted, onUpdated} from 'vue';
 import EventBus from "@/events/EventBus";
 
-export default defineComponent({
-  props: {
-    isOpened: {
-      type: Boolean,
-      default: false
-    },
-  },
-  data() {
-    return {
-      dataKey: 0,
-      form: {
-        name: "",
-        year: "",
-        text: ""
-      },
-      dialog: null
-    }
-  },
+const props = defineProps({
 
-  created() {
-    this.name = "ABC"
-    this.year = "1"
-    this.text = "nichts"
-    console.log("1",this.$refs.dialog)
+})
 
-  },
-  mounted() {
-    // console.log("2",this.$refs.dialog)
+const form = ref({})
+const dialog = ref(null)
 
-    EventBus.on('Modal.openDialog', (a) => {
-      console.log(this.$refs.dialog)
-      this.$refs.dialog.showModal();
-    });
+form.value.name = "ABC"
+form.value.year = "1"
+form.value.text = "nichts"
 
-    EventBus.on('Modal.closeDialog', (a) => {
-      console.log("ppppenis",a)
-      this.$refs.dialog.close();
+onMounted(() => {
+  console.log("2")
 
-    });
-  },
-  updated() {
-    console.log("3",this.$refs.dialog)
+  EventBus.on('Modal.openDialog', (a) => {
+    console.log(dialog.value)
+    dialog.value.showModal();
+  });
 
-  },
+  EventBus.on('Modal.closeDialog', (a) => {
+    console.log("ppppenis", a)
+    dialog.value.close();
 
-  watch: {
-    isOpened(newValue, oldValue) {
-      if (newValue === oldValue) return;
-      this.dataKey = newValue;
-    },
-  },
+  });
+})
 
-  computed: {
-  },
-  methods: {
-    storeReference(e) {
-      if(e) {
-        this.dialog = e;
-      }
-    },
-    clearReference() {
-      this.dialog = null;
-    },
-    closeModal() {
-      EventBus.trigger('Modal.closeDialog', 'penis');
-    },
-    getCurrentFormValues() {
-      console.log(this.form)
-    },
-    submit() {
-      // stuff here
-    }
-  }
-});
+onUpdated(() => {
+  console.log("3")
+})
+
+function closeModal() {
+  EventBus.trigger('Modal.closeDialog', 'penis');
+}
+
+function getCurrentFormValues() {
+  console.log(this.form)
+}
+
+function submit() {
+  // stuff here
+}
+
 </script>
 
 <template>
@@ -92,7 +60,8 @@ export default defineComponent({
     <textarea name="text" id="text" v-model="form.text" placeholder="Inhalte hier..."></textarea>
 
     <label for="name">Abteilung</label>
-    <input type="text" name="department" id="department" v-model="form.department" placeholder="Abteilung hier eingeben...">
+    <input type="text" name="department" id="department" v-model="form.department"
+           placeholder="Abteilung hier eingeben...">
 
 
   </dialog>
