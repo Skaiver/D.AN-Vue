@@ -1,10 +1,7 @@
 <script setup lang="ts">
 import {ref, onMounted, onUpdated} from 'vue';
 import EventBus from "@/events/EventBus";
-
-const props = defineProps({
-
-})
+import {useWeeksStore} from "@/stores/weeks";
 
 const form = ref({})
 const dialog = ref(null)
@@ -15,6 +12,10 @@ form.value.text = "nichts"
 
 onMounted(() => {
   console.log("2")
+
+  EventBus.on('Modal.loadDialog', (week) => {
+    form.value.name = week.name;
+  });
 
   EventBus.on('Modal.openDialog', (a) => {
     console.log(dialog.value)
@@ -32,12 +33,21 @@ onUpdated(() => {
   console.log("3")
 })
 
+function saveWeek(week) {
+  const weekStore = useWeeksStore()
+  weekStore.storeWeek(week)
+  console.log(weekStore.weeks)
+}
+
 function closeModal() {
   EventBus.trigger('Modal.closeDialog', 'penis');
 }
 
-function getCurrentFormValues() {
+function triggerSave() {
   console.log(this.form)
+  saveWeek(this.form) // TODO make sure only right object gets saved
+  // TODO make isValidWeekObject method
+  // TODO interface?
 }
 
 function submit() {
@@ -65,7 +75,7 @@ function submit() {
 
 
   </dialog>
-  <button @click="getCurrentFormValues()">Ergebnisse</button>
+  <button @click="triggerSave()">Ergebnisse</button>
 </template>
 
 <style scoped>

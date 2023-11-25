@@ -52,8 +52,8 @@ export default defineComponent({
 
     <MonthListing
         :weeks="[
-            {id: 1, date: {start: '22-09-2023', end: '29-09-2023'}},
-            {id: 2, date: {start: '15-09-2023', end: '22-09-2023'}}
+            {id: 1, name: 'Klaus Kleber', date: {start: '22-09-2023', end: '29-09-2023'}},
+            {id: 2, name: 'Jon Doe', date: {start: '15-09-2023', end: '22-09-2023'}}
             ]"
 
     />

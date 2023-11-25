@@ -1,6 +1,7 @@
 <script lang="ts">
 import {defineComponent} from 'vue'
 import type WeekInterface from "@/components/interfaces/WeekInterface";
+import EventBus from "@/events/EventBus";
 
 export default defineComponent({
   props: {
@@ -27,16 +28,21 @@ export default defineComponent({
   computed: {},
 
   methods: {
+    emitOpenModalEvent(week) {
+      EventBus.trigger('Modal.loadDialog', week);
+      EventBus.trigger('Modal.openDialog', 'penis');
+    }
   }
 });
 </script>
 
 <template>
   <details>
-    <summary>Epcot Center</summary>
+    <summary>November</summary>
     <ul>
       <li v-for="week in dataWeeks" v-bind:key="week.id"
-          @click="$emit('openModal', week)">
+          @click="emitOpenModalEvent(week)"
+      >
         {{ week.date.start }} - {{ week.date.end }}
       </li>
     </ul>
