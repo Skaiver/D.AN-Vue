@@ -48,8 +48,8 @@ export default {
 
     <MonthListing
         :weeks="[
-            {name: 'Klaus Kleber', department: 'Dev 1', content: '2', year: '69', date: {start: '2023-09-22', end: '2023-09-29'}},
-            {name: 'Jon Doe', department: 'Dev 2', content: '3', year: '42', date: {start: '2023-09-22', end: '2023-09-29'}}
+            {isDone: true, name: 'Klaus Kleber', department: 'Dev 1', content: '2', year: '69', date: {start: '2023-09-22', end: '2023-09-29'}},
+            {isDone: false, name: 'Jon Doe', department: 'Dev 2', content: '3', year: '42', date: {start: '2023-09-22', end: '2023-09-29'}}
             ]"
 
     />
