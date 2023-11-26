@@ -31,6 +31,7 @@ onMounted(() => {
 
   EventBus.on('Modal.openDialog', (a) => {
     dialog.value.showModal();
+    // TODO issue: even in "onMounted" dialog ref is null -> how does it work originally? so on fresh page load??
   });
 
   EventBus.on('Modal.closeDialog', (a) => {
@@ -55,12 +56,14 @@ function closeModal() {
 function triggerSave() {
   console.log(this.form)
   saveWeek(this.form)
+  closeModal()
 }
 
 </script>
 
 <template>
-  <dialog ref="dialog">
+  <dialog ref="dialog"
+  :value="dialog">
     <button @click="closeModal()" autofocus>Close</button>
 
     <label for="name">Name</label>
@@ -83,27 +86,27 @@ function triggerSave() {
     <input type="text" name="department" id="department" v-model="form.department"
            placeholder="Abteilung hier eingeben...">
 
+    <button @click="triggerSave()">Speichern</button>
 
   </dialog>
-  <button @click="triggerSave()">Ergebnisse</button>
 </template>
 
 <style scoped>
 dialog {
-  height: 70%;
-  width: 50%;
+  height: 80%;
+  width: 80%;
   margin: 5% auto auto;
 }
 
 dialog input, dialog label, dialog textarea {
   display: block;
-  width: 50%;
+  width: 75%;
   margin: 0 auto;
 }
 
 dialog input {
   height: 24px;
-  width: 50%;
+  width: 75%;
   margin-left: auto;
   margin-right: auto;
   margin-bottom: 2%;
@@ -119,7 +122,7 @@ dialog textarea {
 }
 
 dialog::backdrop {
-  background-color: red;
+  background-color: black;
   opacity: 0.75;
 }
 </style>
