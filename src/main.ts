@@ -12,7 +12,7 @@ const app = createApp(App)
 
 app.config.globalProperties.$bus = $bus;
 
-app.use(createPinia())
 app.use(router)
+app.use(createPinia())
 
 app.mount('#app')

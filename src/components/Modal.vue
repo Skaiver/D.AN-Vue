@@ -6,24 +6,34 @@ import {useWeeksStore} from "@/stores/weeks";
 const form = ref({})
 const dialog = ref(null)
 
-form.value.name = "ABC"
-form.value.year = "1"
-form.value.text = "nichts"
+form.value.name = ""
+form.value.year = ""
+form.value.content = ""
+form.value.department = ""
+form.value.date = {}
+form.value.date["start"] = ""
+form.value.date["end"] = ""
 
 onMounted(() => {
   console.log("2")
 
   EventBus.on('Modal.loadDialog', (week) => {
+    console.log("loading:", week);
     form.value.name = week.name;
+    form.value.year = week.year;
+    form.value.content = week.content;
+    form.value.department = week.department;
+    form.value.date = week.date;
+    form.value.date["start"] = week.date.start;
+    form.value.date["end"] = week.date.end;
+    console.log(week.date.start)
   });
 
   EventBus.on('Modal.openDialog', (a) => {
-    console.log(dialog.value)
     dialog.value.showModal();
   });
 
   EventBus.on('Modal.closeDialog', (a) => {
-    console.log("ppppenis", a)
     dialog.value.close();
 
   });
@@ -36,7 +46,6 @@ onUpdated(() => {
 function saveWeek(week) {
   const weekStore = useWeeksStore()
   weekStore.storeWeek(week)
-  console.log(weekStore.weeks)
 }
 
 function closeModal() {
@@ -45,13 +54,7 @@ function closeModal() {
 
 function triggerSave() {
   console.log(this.form)
-  saveWeek(this.form) // TODO make sure only right object gets saved
-  // TODO make isValidWeekObject method
-  // TODO interface?
-}
-
-function submit() {
-  // stuff here
+  saveWeek(this.form)
 }
 
 </script>
@@ -66,8 +69,15 @@ function submit() {
     <label for="year">Ausbildungsjahr</label>
     <input type="number" name="year" id="year" v-model="form.year" placeholder="Jahr hier eingeben...">
 
+    <label for="date_start">Startdatum</label>
+    <input type="date" name="date_start" id="date_start" v-model="form.date.start"
+           placeholder="Startdatum hier eingeben...">
+
+    <label for="date_end">Enddatum</label>
+    <input type="date" name="date_end" id="date_end" v-model="form.date.end" placeholder="Enddatum hier eingeben...">
+
     <label for="text">Inhalt</label>
-    <textarea name="text" id="text" v-model="form.text" placeholder="Inhalte hier..."></textarea>
+    <textarea name="text" id="text" v-model="form.content" placeholder="Inhalte hier..."></textarea>
 
     <label for="name">Abteilung</label>
     <input type="text" name="department" id="department" v-model="form.department"

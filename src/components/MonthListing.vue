@@ -1,39 +1,20 @@
-<script lang="ts">
-import {defineComponent} from 'vue'
+<script setup lang="ts">
+import {ref} from 'vue'
 import type WeekInterface from "@/components/interfaces/WeekInterface";
 import EventBus from "@/events/EventBus";
 
-export default defineComponent({
-  props: {
-    weeks: {
-      type: Array,
-      default: [] as WeekInterface[]
-    }
-  },
-  data() {
-    return {
-      dataWeeks: [] as WeekInterface[]
-    }
-  },
+const props = defineProps({
+  weeks: {type: Array, required: true},
+})
 
-  created() {
-    this.dataWeeks = this.weeks;
-  },
-  mounted() {
-    // console.log(this.dataWeeks)
-  },
+const dataWeeks = ref([] as WeekInterface[])
+dataWeeks.value = props.weeks as WeekInterface[];
 
-  watch: {},
+function emitOpenModalEvent(week) {
+  EventBus.trigger('Modal.loadDialog', week);
+  EventBus.trigger('Modal.openDialog', 'penis');
+}
 
-  computed: {},
-
-  methods: {
-    emitOpenModalEvent(week) {
-      EventBus.trigger('Modal.loadDialog', week);
-      EventBus.trigger('Modal.openDialog', 'penis');
-    }
-  }
-});
 </script>
 
 <template>
