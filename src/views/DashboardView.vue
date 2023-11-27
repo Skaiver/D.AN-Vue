@@ -47,9 +47,19 @@ export default {
     <button @click="toggleModal()">Toggle Modal</button>
 
     <MonthListing
+        monthName="September"
         :weeks="[
             {isDone: true, name: 'Klaus Kleber', department: 'Dev 1', content: '2', year: '69', date: {start: '2023-09-22', end: '2023-09-29'}},
             {isDone: false, name: 'Jon Doe', department: 'Dev 2', content: '3', year: '42', date: {start: '2023-09-22', end: '2023-09-29'}}
+            ]"
+
+    />
+
+    <MonthListing
+        monthName="August"
+        :weeks="[
+            {isDone: true, name: 'Klaus Kleber', department: 'Dev 1', content: '2', year: '69', date: {start: '2023-08-22', end: '2023-08-29'}},
+            {isDone: false, name: 'Jon Doe', department: 'Dev 2', content: '3', year: '42', date: {start: '2023-08-22', end: '2023-08-29'}}
             ]"
 
     />

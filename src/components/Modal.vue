@@ -4,7 +4,7 @@ import EventBus from "@/events/EventBus";
 import {useWeeksStore} from "@/stores/weeks";
 
 const form = ref({})
-const dialog = ref(null)
+const dialog = ref(true)
 
 form.value.name = ""
 form.value.year = ""
@@ -30,12 +30,12 @@ onMounted(() => {
   });
 
   EventBus.on('Modal.openDialog', (a) => {
-    dialog.value.showModal();
+    dialog.value?.showModal();
     // TODO issue: even in "onMounted" dialog ref is null -> how does it work originally? so on fresh page load??
   });
 
   EventBus.on('Modal.closeDialog', (a) => {
-    dialog.value.close();
+    dialog.value?.close();
 
   });
 })
@@ -58,12 +58,11 @@ function triggerSave() {
   saveWeek(this.form)
   closeModal()
 }
-
 </script>
 
+
 <template>
-  <dialog ref="dialog"
-  :value="dialog">
+  <dialog v-if="dialog !== null" ref="dialog">
     <button @click="closeModal()" autofocus>Close</button>
 
     <label for="name">Name</label>

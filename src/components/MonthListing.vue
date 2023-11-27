@@ -5,6 +5,7 @@ import EventBus from "@/events/EventBus";
 
 const props = defineProps({
   weeks: {type: Array, required: true},
+  monthName: {type: String, required: true},
 })
 
 const dataWeeks = ref([] as WeekInterface[])
@@ -19,12 +20,11 @@ function emitOpenModalEvent(week) {
 
 <template>
   <details class="month-listing">
-    <summary>November</summary>
+    <summary>{{ props.monthName }}</summary>
     <ul>
       <li v-for="week in dataWeeks" v-bind:key="week.id"
-          @click="emitOpenModalEvent(week)"
           :data-checked="week.isDone"
-      >
+          @click="emitOpenModalEvent(week)">
         {{ week.date.start }} - {{ week.date.end }}
       </li>
     </ul>
