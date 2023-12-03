@@ -1,12 +1,31 @@
 import {ref} from 'vue'
 import {defineStore} from 'pinia'
+import {hasWorkingStorage} from '@/composables/hasWorkingStorage'
 
 export const useWeeksStore = defineStore('weeks', () => {
-    const weeks = ref([])
+
+    let weeksValue = [];
+    const useLocalStorage = hasWorkingStorage("localStorage");
+    // check if browser supports localStorage
+    if (useLocalStorage) {
+        // load existing value from localStorage
+        const localStorage = window.localStorage;
+        const currentRawData = localStorage.getItem('d-an'); // syntax: [{},{}]
+
+        // console.log(currentRawData)
+        const currentWeeks = JSON.parse(currentRawData);
+        if (currentWeeks.constructor === Array) {
+            weeksValue = currentWeeks;
+        }
+    }
+    const weeks = ref(weeksValue)
 
     function storeWeek(week) {
         if (isValidWeek(week)) {
             weeks.value.push(week)
+            if (useLocalStorage) {
+                localStorage.setItem('d-an', JSON.stringify(weeks.value));
+            }
         } else {
             throw new Error('Cannot store invalid week')
         }

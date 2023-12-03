@@ -15,8 +15,6 @@ form.value.date["start"] = ""
 form.value.date["end"] = ""
 
 onMounted(() => {
-  console.log("2")
-
   EventBus.on('Modal.loadDialog', (week) => {
     console.log("loading:", week);
     form.value.name = week.name;
@@ -26,22 +24,19 @@ onMounted(() => {
     form.value.date = week.date;
     form.value.date["start"] = week.date.start;
     form.value.date["end"] = week.date.end;
-    console.log(week.date.start)
   });
 
-  EventBus.on('Modal.openDialog', (a) => {
+  EventBus.on('Modal.openDialog', () => {
     dialog.value?.showModal();
-    // TODO issue: even in "onMounted" dialog ref is null -> how does it work originally? so on fresh page load??
   });
 
-  EventBus.on('Modal.closeDialog', (a) => {
+  EventBus.on('Modal.closeDialog', () => {
     dialog.value?.close();
 
   });
 })
 
 onUpdated(() => {
-  console.log("3")
 })
 
 function saveWeek(week) {
@@ -50,11 +45,10 @@ function saveWeek(week) {
 }
 
 function closeModal() {
-  EventBus.trigger('Modal.closeDialog', 'penis');
+  EventBus.trigger('Modal.closeDialog');
 }
 
 function triggerSave() {
-  console.log(this.form)
   saveWeek(this.form)
   closeModal()
 }
@@ -62,7 +56,7 @@ function triggerSave() {
 
 
 <template>
-  <dialog v-if="dialog !== null" ref="dialog">
+  <dialog ref="dialog">
     <button @click="closeModal()" autofocus>Close</button>
 
     <label for="name">Name</label>

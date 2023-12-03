@@ -13,7 +13,7 @@ dataWeeks.value = props.weeks as WeekInterface[];
 
 function emitOpenModalEvent(week) {
   EventBus.trigger('Modal.loadDialog', week);
-  EventBus.trigger('Modal.openDialog', 'penis');
+  EventBus.trigger('Modal.openDialog');
 }
 
 </script>
@@ -34,6 +34,7 @@ function emitOpenModalEvent(week) {
 <style scoped>
 .month-listing {
   position: relative;
+  margin-bottom: 1rem;
 }
 
 .month-listing summary {

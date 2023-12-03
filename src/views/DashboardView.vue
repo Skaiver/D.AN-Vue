@@ -9,19 +9,13 @@ const getIsModalOpened = computed(() => {
   return isModalOpened;
 })
 
-function forceRerender() {
-  console.log("ff")
-  this.componentKey += 1;
-}
-
 function toggleModal() {
   if (isModalOpened.value) {
-    EventBus.trigger('Modal.closeDialog', 'penis');
+    EventBus.trigger('Modal.closeDialog');
   } else {
-    EventBus.trigger('Modal.openDialog', 'penis');
+    EventBus.trigger('Modal.openDialog');
 
   }
-  // this.forceRerender();
 }
 
 </script>
@@ -42,9 +36,7 @@ export default {
   <main>
     <Modal
         :key="componentKey"
-        :isOpened="getIsModalOpened"
     />
-    <button @click="toggleModal()">Toggle Modal</button>
 
     <MonthListing
         monthName="September"
