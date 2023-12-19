@@ -1,86 +1,121 @@
 <script setup lang="ts">
-import {ref, onMounted, onUpdated} from 'vue';
-import EventBus from "@/events/EventBus";
-import {useWeeksStore} from "@/stores/weeks";
 
-const form = ref({})
-const dialog = ref(true)
+import { ref, onMounted, onUpdated, type Ref } from 'vue'
+import EventBus from '@/events/EventBus'
+import { useWeeksStore } from '@/stores/weeks'
+import type { modalFormType } from './interfaces/ModalFormType';
 
-form.value.name = ""
-form.value.year = ""
-form.value.content = ""
-form.value.department = ""
-form.value.date = {}
-form.value.date["start"] = ""
-form.value.date["end"] = ""
+const defultFormObject: modalFormType = {
+  name: '',
+  year: '',
+  content: '',
+  department: '',
+  date: {
+    start: '',
+    end: ''
+  }
+}
+const form : Ref<modalFormType> = ref(defultFormObject)
+const dialog: Ref<HTMLDialogElement | null> = ref(null)
+
+form.value.name = ''
+form.value.year = ''
+form.value.content = ''
+form.value.department = ''
+form.value.date['start'] = ''
+form.value.date['end'] = ''
 
 onMounted(() => {
-  EventBus.on('Modal.loadDialog', (week) => {
-    console.log("loading:", week);
-    form.value.name = week.name;
-    form.value.year = week.year;
-    form.value.content = week.content;
-    form.value.department = week.department;
-    form.value.date = week.date;
-    form.value.date["start"] = week.date.start;
-    form.value.date["end"] = week.date.end;
-  });
+  EventBus.on('Modal.loadDialog', (week: modalFormType) => {
+    console.log('loading:', week)
+    form.value.name = week.name
+    form.value.year = week.year
+    form.value.content = week.content
+    form.value.department = week.department
+    form.value.date = week.date
+    form.value.date['start'] = week.date.start
+    form.value.date['end'] = week.date.end
+  })
 
   EventBus.on('Modal.openDialog', () => {
-    dialog.value?.showModal();
-  });
+    dialog.value?.showModal()
+  })
 
   EventBus.on('Modal.closeDialog', () => {
-    dialog.value?.close();
-
-  });
+    dialog.value?.close()
+  })
 })
 
-onUpdated(() => {
-})
+onUpdated(() => {})
 
-function saveWeek(week) {
+function saveWeek(week: modalFormType) {
   const weekStore = useWeeksStore()
   weekStore.storeWeek(week)
 }
 
 function closeModal() {
-  EventBus.trigger('Modal.closeDialog');
+  EventBus.trigger('Modal.closeDialog', null)
 }
 
 function triggerSave() {
-  saveWeek(this.form)
+  saveWeek(form.value)
   closeModal()
 }
 </script>
-
 
 <template>
   <dialog ref="dialog">
     <button @click="closeModal()" autofocus>Close</button>
 
     <label for="name">Name</label>
-    <input type="text" name="name" id="name" v-model="form.name" placeholder="Namen hier eingeben...">
+    <input
+      type="text"
+      name="name"
+      id="name"
+      v-model="form.name"
+      placeholder="Namen hier eingeben..."
+    />
 
     <label for="year">Ausbildungsjahr</label>
-    <input type="number" name="year" id="year" v-model="form.year" placeholder="Jahr hier eingeben...">
+    <input
+      type="number"
+      name="year"
+      id="year"
+      v-model="form.year"
+      placeholder="Jahr hier eingeben..."
+    />
 
     <label for="date_start">Startdatum</label>
-    <input type="date" name="date_start" id="date_start" v-model="form.date.start"
-           placeholder="Startdatum hier eingeben...">
+    <input
+      type="date"
+      name="date_start"
+      id="date_start"
+      v-model="form.date.start"
+      placeholder="Startdatum hier eingeben..."
+    />
 
     <label for="date_end">Enddatum</label>
-    <input type="date" name="date_end" id="date_end" v-model="form.date.end" placeholder="Enddatum hier eingeben...">
+    <input
+      type="date"
+      name="date_end"
+      id="date_end"
+      v-model="form.date.end"
+      placeholder="Enddatum hier eingeben..."
+    />
 
     <label for="text">Inhalt</label>
     <textarea name="text" id="text" v-model="form.content" placeholder="Inhalte hier..."></textarea>
 
     <label for="name">Abteilung</label>
-    <input type="text" name="department" id="department" v-model="form.department"
-           placeholder="Abteilung hier eingeben...">
+    <input
+      type="text"
+      name="department"
+      id="department"
+      v-model="form.department"
+      placeholder="Abteilung hier eingeben..."
+    />
 
     <button @click="triggerSave()">Speichern</button>
-
   </dialog>
 </template>
 
@@ -91,7 +126,9 @@ dialog {
   margin: 5% auto auto;
 }
 
-dialog input, dialog label, dialog textarea {
+dialog input,
+dialog label,
+dialog textarea {
   display: block;
   width: 75%;
   margin: 0 auto;

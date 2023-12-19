@@ -2,6 +2,7 @@
 import {ref} from 'vue'
 import type WeekInterface from "@/components/interfaces/WeekInterface";
 import EventBus from "@/events/EventBus";
+import type { modalFormType } from './interfaces/ModalFormType';
 
 const props = defineProps({
   weeks: {type: Array, required: true},
@@ -11,9 +12,9 @@ const props = defineProps({
 const dataWeeks = ref([] as WeekInterface[])
 dataWeeks.value = props.weeks as WeekInterface[];
 
-function emitOpenModalEvent(week) {
+function emitOpenModalEvent(week: WeekInterface) {
   EventBus.trigger('Modal.loadDialog', week);
-  EventBus.trigger('Modal.openDialog');
+  EventBus.trigger('Modal.openDialog', null);
 }
 
 </script>

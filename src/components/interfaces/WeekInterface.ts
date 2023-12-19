@@ -4,4 +4,5 @@ export default interface WeekInterface {
         start: string,
         end: string,
     }
+    isDone?: boolean
 }
