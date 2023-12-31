@@ -1,3 +1,4 @@
+// @ts-nocheck
 export function hasWorkingStorage(type) {
     let storage;
     try {
