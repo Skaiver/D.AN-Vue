@@ -17,16 +17,28 @@ function emitOpenModalEvent(week: WeekInterface) {
   EventBus.trigger('Modal.openDialog', null);
 }
 
+function formatDate(s: string) {
+  let ms = Date.parse(s);
+  let date = new Date(ms);
+  return date.getDate() + ".";
+}
+
+function getYearOfDate(s: string){
+  let ms = Date.parse(s);
+  let date = new Date(ms);
+  return date.getFullYear();
+}
+
 </script>
 
 <template>
   <details class="month-listing">
-    <summary>{{ props.monthName }}</summary>
+    <summary>{{ props.monthName }} {{ getYearOfDate(dataWeeks[0]?.date?.start) }}</summary>
     <ul>
       <li v-for="week in dataWeeks" v-bind:key="week.id"
           :data-checked="week.isDone"
           @click="emitOpenModalEvent(week)">
-        {{ week.date.start }} - {{ week.date.end }}
+        {{ formatDate(week.date.start) }} - {{ formatDate(week.date.end) }}
       </li>
     </ul>
   </details>
@@ -35,26 +47,27 @@ function emitOpenModalEvent(week: WeekInterface) {
 <style scoped>
 .month-listing {
   position: relative;
-  margin-bottom: 1rem;
+  margin-bottom: 0.3rem;
 }
 
 .month-listing summary {
   background-color: #2f405b;
   padding: 15px 10px;
-  margin-bottom: 2px;
   border-radius: 3px;
 }
 
 .month-listing ul {
   text-decoration: none;
   list-style: none;
+  margin-top: 0.3rem;
+  padding-left: 20px;
 }
 
 .month-listing ul li {
   position: relative;
   background-color: #2f405b;
   padding: 15px 10px;
-  margin-bottom: 2px;
+  margin-bottom: 0.2rem;
   border-radius: 3px;
 }
 

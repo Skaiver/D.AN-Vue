@@ -1,9 +1,8 @@
 <script setup lang="ts">
-
 import { ref, onMounted, onUpdated, type Ref } from 'vue'
 import EventBus from '@/events/EventBus'
 import { useWeeksStore } from '@/stores/weeks'
-import type { modalFormType } from './interfaces/ModalFormType';
+import type { modalFormType } from './interfaces/ModalFormType'
 
 const defultFormObject: modalFormType = {
   name: '',
@@ -15,7 +14,7 @@ const defultFormObject: modalFormType = {
     end: ''
   }
 }
-const form : Ref<modalFormType> = ref(defultFormObject)
+const form: Ref<modalFormType> = ref(defultFormObject)
 const dialog: Ref<HTMLDialogElement | null> = ref(null)
 
 form.value.name = ''
@@ -65,8 +64,6 @@ function triggerSave() {
 
 <template>
   <dialog ref="dialog">
-    <button @click="closeModal()" autofocus>Close</button>
-
     <label for="name">Name</label>
     <input
       type="text"
@@ -115,40 +112,58 @@ function triggerSave() {
       placeholder="Abteilung hier eingeben..."
     />
 
-    <button @click="triggerSave()">Speichern</button>
+    <div class="actions">
+      <button class="btn btn-danger" @click="closeModal()" autofocus>Close</button>
+      <button class="btn btn-success" @click="triggerSave()">Speichern</button>
+    </div>
   </dialog>
 </template>
 
 <style scoped>
+.actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1.5rem;
+}
+
 dialog {
   height: 80%;
   width: 80%;
   margin: 5% auto auto;
+  background-color: #2f405b;
+  color: #6f7fa5;
+  border: unset;
 }
 
 dialog input,
 dialog label,
 dialog textarea {
   display: block;
-  width: 75%;
-  margin: 0 auto;
+  width: 97%;
+  /* margin: 0 auto; */
+  background-color: #2f405b;
+  border-color: #6f7fa5;
 }
 
 dialog input {
+  color: white;
   height: 24px;
-  width: 75%;
-  margin-left: auto;
-  margin-right: auto;
-  margin-bottom: 2%;
+  width: 95%;
+  /* margin-left: auto; */
+  /* margin-right: auto; */
+  margin-bottom: 0.2rem;
   border: 1px solid black;
   padding: 5px;
   border-radius: 2px;
+  background-color: #2f405b;
+  border: 1px solid #6f7fa5;
 }
 
 dialog textarea {
-  border: 1px solid black;
+  color: white;
   padding: 2px;
   border-radius: 2px;
+  border: 1px solid #6f7fa5;
 }
 
 dialog::backdrop {

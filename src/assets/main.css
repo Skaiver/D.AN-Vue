@@ -1,1 +1,17 @@
 @import './base.css';
+
+.btn {
+    all: unset;
+    padding: 5px 10px;
+    border-radius: 2px;
+}
+
+.btn-danger {
+    background-color: rgb(255, 89, 89);
+    color: white;
+}
+
+.btn-success {
+    background-color: rgb(136, 197, 45);
+    color: white;
+}

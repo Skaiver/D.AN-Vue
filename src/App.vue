@@ -8,6 +8,7 @@ import {RouterLink, RouterView} from 'vue-router'
       <h2>Hallo Malte</h2>
       <p>Hier sind deine Ausbildungsnachweise</p>
     </div>
+    
     <nav>
       <RouterLink to="/">Dashbaord</RouterLink>
       <RouterLink to="/export">Export</RouterLink>
@@ -49,16 +50,10 @@ header {
   margin-bottom: 1rem;
 
   .message {
-    background-color: #4ea1f6;
-    color: white;
-    padding: 5px 10px;
-    border-radius: 5px 5px 0 0;
-    //margin-bottom: 1rem;
-
-    h2,
-    p {
+    h2, p {
       font-weight: 300;
       display: inline-block;
+      margin-top: 0;
     }
 
     h2 {
@@ -71,6 +66,11 @@ header {
       font-size: var(--header-message);
     }
 
+    margin-bottom: 0.5rem;
+    background-color: #4ea1f6;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px 5px 0 0;
   }
 }
 
@@ -86,12 +86,16 @@ nav a {
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  height: 75px;
+  max-height: 100px;
   aspect-ratio: 16 / 9;
   background-color: #2f405b;
   border: #649ff0 1px solid;
   border-radius: 4px;
-//border-top: 0; //border-top-left-radius: 0; //border-top-right-radius: 0; //border-bottom-right-radius: 0; color: #6f7fa5;
+  /* border-top: 0; 
+  border-top-left-radius: 0; 
+  border-top-right-radius: 0; 
+  border-bottom-right-radius: 0; */
+  color: #6f7fa5; 
 
 }
 
