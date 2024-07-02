@@ -26,10 +26,19 @@ function getWeeks(): Array<Object> {
   return weekStore.getWeeks() ?? [];
 }
 
-function getStoredWeeksOfMonth(monthNumber: number) {
+function getSortedWeeks(): Array<Object> {
   const weeks = getWeeks();
-  const aa = Sorting(weeks);
+  const sortedWeeks = Sorting(weeks);
+  console.log(sortedWeeks);
+  
+  return sortedWeeks;
 }
+
+function getSortedWeeksOfMonth(monthNumber: number): Array<Object> {
+  return getSortedWeeks()[monthNumber];
+
+}
+
 
 </script>
 
@@ -51,21 +60,12 @@ export default {
         :key="componentKey"
     />
 
-    <MonthListing
-        monthName="September"
-        :weeks="[
-            {isDone: true, name: 'Klaus Kleber', department: 'Dev 1', content: '2', year: '69', date: {start: '2023-09-22', end: '2023-09-29'}},
-            {isDone: false, name: 'Jon Doe', department: 'Dev 2', content: '3', year: '42', date: {start: '2023-09-22', end: '2023-09-29'}}
-            ]"
+    <MonthListing 
+        v-for="(month, index) in getSortedWeeks()"
+        :monthName="index"
+        :weeks="getSortedWeeksOfMonth(index)"
 
     />
 
-    <MonthListing
-        monthName="August"
-        :weeks="getWeeks()"
-
-    />
-
-    {{ getStoredWeeksOfMonth(1) }}
   </main>
 </template>

@@ -6,7 +6,7 @@ import type { modalFormType } from './interfaces/ModalFormType';
 
 const props = defineProps({
   weeks: {type: Array, required: true},
-  monthName: {type: String, required: true},
+  monthName: {type: Number, required: true},
 })
 
 const dataWeeks = ref([] as WeekInterface[])
