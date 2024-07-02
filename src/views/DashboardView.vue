@@ -1,60 +1,58 @@
 <script setup lang="ts">
-import EventBus from "@/events/EventBus";
-import {computed, ref} from "vue";
+import EventBus from '@/events/EventBus'
+import { computed, ref, onUpdated, onMounted, watch } from 'vue'
 import { useWeeksStore } from '@/stores/weeks'
 import { Sorting } from '@/composables/sorting'
 
 const weekStore = useWeeksStore()
 
 const componentKey = ref(0)
+const storedWeeks = ref([] as Object[])
 
-function getWeeks(): Array<Object> {
-  return weekStore.getWeeks() ?? [];
+function emitOpenModalEvent() {
+  EventBus.trigger('Modal.openDialog', null)
 }
 
-function getSortedWeeks(): Array<Object> {
-  const weeks = getWeeks();
-  const sortedWeeks = Sorting(weeks);
-  
-  return sortedWeeks;
+onMounted(() => {
+  const weeks = weekStore.getWeeks() ?? []
+  const sortedWeeks = Sorting(weeks)
+  storedWeeks.value = sortedWeeks as Object[]
+})
+
+const forceRerender = () => {
+  componentKey.value += 1
+  const weeks = weekStore.getWeeks() ?? []
+  const sortedWeeks = Sorting(weeks)
+  storedWeeks.value = sortedWeeks as Object[]
 }
 
-function getSortedWeeksOfMonth(monthNumber: number): Array<Object> {
-  return getSortedWeeks()[monthNumber];
-
-}
-
-function emitOpenModalEvent(){
-  EventBus.trigger('Modal.openDialog', null);
-}
-
-
+EventBus.on('DashboardView.forceRerender', () => {
+  forceRerender()
+});
 </script>
 
 <script lang="ts">
-import MonthListing from "@/components/MonthListing.vue";
-import Modal from "@/components/Modal.vue";
+import MonthListing from '@/components/MonthListing.vue'
+import Modal from '@/components/Modal.vue'
 
 export default {
   components: {
     MonthListing,
     Modal
-  },
-};
+  }
+}
 </script>
 
 <template>
   <main>
-    <Modal
-        :key="componentKey"
-    />
+    <Modal :key="componentKey" />
 
-    <MonthListing 
-        v-for="(month, index) in getSortedWeeks()"
-        :monthName="index"
-        :weeks="getSortedWeeksOfMonth(index)"
+    <MonthListing
+      v-for="(weeks, monthNumber) in storedWeeks"
+      :monthName="monthNumber"
+      :weeks="weeks as any"
+      :key="componentKey"
     />
-
   </main>
 
   <div class="quick-actions">

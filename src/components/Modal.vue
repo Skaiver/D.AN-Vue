@@ -63,6 +63,7 @@ function closeModal() {
 function triggerSave() {
   saveWeek(form.value)
   closeModal()
+  EventBus.trigger('DashboardView.forceRerender', null);
 }
 </script>
 
@@ -169,6 +170,12 @@ dialog input {
   border-radius: 2px;
   background-color: #2f405b;
   border: 1px solid #6f7fa5;
+}
+
+dialog input[type="checkbox"] {
+  height: 15px;
+  aspect-ratio: 1 / 1;
+  width: unset;
 }
 
 dialog textarea {

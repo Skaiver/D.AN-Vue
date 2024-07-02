@@ -1,43 +1,46 @@
 <script setup lang="ts">
-import {ref} from 'vue'
-import type WeekInterface from "@/components/interfaces/WeekInterface";
-import EventBus from "@/events/EventBus";
-import type { modalFormType } from './interfaces/ModalFormType';
+import { ref, onUpdated, onMounted } from 'vue'
+import type WeekInterface from '@/components/interfaces/WeekInterface'
+import EventBus from '@/events/EventBus'
+import type { modalFormType } from './interfaces/ModalFormType'
 
 const props = defineProps({
-  weeks: {type: Array, required: true},
-  monthName: {type: Number, required: true},
+  key: { type: Number, required: false },
+  weeks: { type: Array, required: true },
+  monthName: { type: Number, required: true }
 })
 
 const dataWeeks = ref([] as WeekInterface[])
-dataWeeks.value = props.weeks as WeekInterface[];
+dataWeeks.value = props.weeks as WeekInterface[]
 
 function emitOpenModalEvent(week: WeekInterface) {
-  EventBus.trigger('Modal.loadDialog', week);
-  EventBus.trigger('Modal.openDialog', null);
+  EventBus.trigger('Modal.loadDialog', week)
+  EventBus.trigger('Modal.openDialog', null)
 }
 
 function formatDate(s: string) {
-  let ms = Date.parse(s);
-  let date = new Date(ms);
-  return date.getDate() + ".";
+  let ms = Date.parse(s)
+  let date = new Date(ms)
+  return date.getDate() + '.'
 }
 
-function getYearOfDate(s: string){
-  let ms = Date.parse(s);
-  let date = new Date(ms);
-  return date.getFullYear();
+function getYearOfDate(s: string) {
+  let ms = Date.parse(s)
+  let date = new Date(ms)
+  return date.getFullYear()
 }
-
 </script>
 
 <template>
   <details class="month-listing">
     <summary>{{ props.monthName }} {{ getYearOfDate(dataWeeks[0]?.date?.start) }}</summary>
     <ul>
-      <li v-for="week in dataWeeks" v-bind:key="week.id"
-          :data-checked="week.isDone ?? false"
-          @click="emitOpenModalEvent(week)">
+      <li
+        v-for="week in dataWeeks"
+        v-bind:key="week.id"
+        :data-checked="week.isDone ?? false"
+        @click="emitOpenModalEvent(week)"
+      >
         {{ formatDate(week.date.start) }} - {{ formatDate(week.date.end) }}
       </li>
     </ul>
@@ -81,15 +84,15 @@ function getYearOfDate(s: string){
 }
 
 .month-listing ul li[data-checked='true']::before {
-  content: url("/media/icons/check.svg");
+  content: url('/media/icons/check.svg');
 }
 
 .month-listing ul li[data-checked='false']::before {
-  content: url("/media/icons/close.svg");
+  content: url('/media/icons/close.svg');
 }
 
 .month-listing ul li::after {
-  content: url("/media/icons/file-arrow-down.svg");
+  content: url('/media/icons/file-arrow-down.svg');
   position: absolute;
   right: 0;
   padding-right: 20px;
