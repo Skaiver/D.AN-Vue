@@ -21,7 +21,6 @@ export const useWeeksStore = defineStore('weeks', () => {
     const currentRawData = localStorage.getItem('d-an') // syntax: [{},{}]
 
     let currentWeeks = JSON.parse(currentRawData)
-    console.log(1, currentWeeks)
 
     return currentWeeks
   }

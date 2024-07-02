@@ -2,6 +2,7 @@
 import EventBus from "@/events/EventBus";
 import {computed, ref} from "vue";
 import { useWeeksStore } from '@/stores/weeks'
+import { Sorting } from '@/composables/sorting'
 
 const weekStore = useWeeksStore()
 
@@ -23,6 +24,11 @@ function toggleModal() {
 
 function getWeeks(): Array<Object> {
   return weekStore.getWeeks() ?? [];
+}
+
+function getStoredWeeksOfMonth(monthNumber: number) {
+  const weeks = getWeeks();
+  const aa = Sorting(weeks);
 }
 
 </script>
@@ -60,6 +66,6 @@ export default {
 
     />
 
-    {{ getWeeks() }}
+    {{ getStoredWeeksOfMonth(1) }}
   </main>
 </template>

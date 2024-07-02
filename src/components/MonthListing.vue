@@ -36,7 +36,7 @@ function getYearOfDate(s: string){
     <summary>{{ props.monthName }} {{ getYearOfDate(dataWeeks[0]?.date?.start) }}</summary>
     <ul>
       <li v-for="week in dataWeeks" v-bind:key="week.id"
-          :data-checked="week.isDone"
+          :data-checked="week.isDone ?? false"
           @click="emitOpenModalEvent(week)">
         {{ formatDate(week.date.start) }} - {{ formatDate(week.date.end) }}
       </li>
