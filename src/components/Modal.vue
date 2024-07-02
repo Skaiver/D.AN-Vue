@@ -11,6 +11,7 @@ const defultFormObject: modalFormType = {
   year: '',
   content: '',
   department: '',
+  isDone: false,
   date: {
     start: '',
     end: ''
@@ -23,6 +24,7 @@ form.value.name = ''
 form.value.year = ''
 form.value.content = ''
 form.value.department = ''
+form.value.isDone = false
 form.value.date['start'] = ''
 form.value.date['end'] = ''
 
@@ -34,6 +36,7 @@ onMounted(() => {
     form.value.content = week.content
     form.value.department = week.department
     form.value.date = week.date
+    form.value.isDone = week.isDone
     form.value.date['start'] = week.date.start
     form.value.date['end'] = week.date.end
   })
@@ -111,6 +114,14 @@ function triggerSave() {
       id="department"
       v-model="form.department"
       placeholder="Abteilung hier eingeben..."
+    />
+
+    <label for="isDone">Eintrag abhaken?</label>
+    <input
+      type="checkbox"
+      name="isDone"
+      id="isDone"
+      v-model="form.isDone"
     />
 
     <div class="actions">

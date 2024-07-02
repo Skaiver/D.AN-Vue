@@ -55,10 +55,6 @@ export const useWeeksStore = defineStore('weeks', () => {
     }
 
     localStorage.setItem('d-an', JSON.stringify(weeks))
-
-    console.log('push', week)
-    console.log('isDup?', isDuplicate(week))
-    console.log('index:', getIndexOfWeekInStorage(week))
   }
 
   function getIndexOfWeekInStorage(week: WeekInterface) {

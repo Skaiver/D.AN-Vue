@@ -4,8 +4,6 @@ export function Sorting(weeks): Object {
   // inside of the months the first key/week should be the youngest e.g. first week of the month
   let months: Object = {}
 
-  console.log(weeks.length)
-
   for (let index = 0; index < weeks.length; index++) {
     const element = weeks[index]
 

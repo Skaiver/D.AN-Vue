@@ -7,20 +7,6 @@ import { Sorting } from '@/composables/sorting'
 const weekStore = useWeeksStore()
 
 const componentKey = ref(0)
-const isModalOpened = ref(false)
-
-const getIsModalOpened = computed(() => {
-  return isModalOpened;
-})
-
-function toggleModal() {
-  if (isModalOpened.value) {
-    EventBus.trigger('Modal.closeDialog');
-  } else {
-    EventBus.trigger('Modal.openDialog');
-
-  }
-}
 
 function getWeeks(): Array<Object> {
   return weekStore.getWeeks() ?? [];
@@ -29,7 +15,6 @@ function getWeeks(): Array<Object> {
 function getSortedWeeks(): Array<Object> {
   const weeks = getWeeks();
   const sortedWeeks = Sorting(weeks);
-  console.log(sortedWeeks);
   
   return sortedWeeks;
 }
@@ -37,6 +22,10 @@ function getSortedWeeks(): Array<Object> {
 function getSortedWeeksOfMonth(monthNumber: number): Array<Object> {
   return getSortedWeeks()[monthNumber];
 
+}
+
+function emitOpenModalEvent(){
+  EventBus.trigger('Modal.openDialog', null);
 }
 
 
@@ -64,8 +53,11 @@ export default {
         v-for="(month, index) in getSortedWeeks()"
         :monthName="index"
         :weeks="getSortedWeeksOfMonth(index)"
-
     />
 
   </main>
+
+  <div class="quick-actions">
+    <button @click="emitOpenModalEvent()">+</button>
+  </div>
 </template>

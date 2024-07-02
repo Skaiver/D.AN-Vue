@@ -3,6 +3,7 @@ export type modalFormType = {
   year: string
   content: string
   department: string
+  isDone: boolean
   date: {
     start: string
     end: string
