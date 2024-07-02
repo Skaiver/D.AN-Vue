@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import EventBus from "@/events/EventBus";
 import {computed, ref} from "vue";
+import { useWeeksStore } from '@/stores/weeks'
+
+const weekStore = useWeeksStore()
 
 const componentKey = ref(0)
 const isModalOpened = ref(false)
@@ -16,6 +19,10 @@ function toggleModal() {
     EventBus.trigger('Modal.openDialog');
 
   }
+}
+
+function getWeeks(): Array<Object> {
+  return weekStore.getWeeks() ?? [];
 }
 
 </script>
@@ -49,11 +56,10 @@ export default {
 
     <MonthListing
         monthName="August"
-        :weeks="[
-            {isDone: true, name: 'Klaus Kleber', department: 'Dev 1', content: '2', year: '69', date: {start: '2023-08-22', end: '2023-08-29'}},
-            {isDone: false, name: 'Jon Doe', department: 'Dev 2', content: '3', year: '42', date: {start: '2023-08-22', end: '2023-08-29'}}
-            ]"
+        :weeks="getWeeks()"
 
     />
+
+    {{ getWeeks() }}
   </main>
 </template>

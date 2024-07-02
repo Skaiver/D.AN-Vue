@@ -4,6 +4,8 @@ import EventBus from '@/events/EventBus'
 import { useWeeksStore } from '@/stores/weeks'
 import type { modalFormType } from './interfaces/ModalFormType'
 
+const weekStore = useWeeksStore()
+
 const defultFormObject: modalFormType = {
   name: '',
   year: '',
@@ -48,7 +50,6 @@ onMounted(() => {
 onUpdated(() => {})
 
 function saveWeek(week: modalFormType) {
-  const weekStore = useWeeksStore()
   weekStore.storeWeek(week)
 }
 
