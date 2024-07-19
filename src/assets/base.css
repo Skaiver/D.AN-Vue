@@ -11,5 +11,7 @@ html {
 
     /* main text color */
     color: #4ea1f6;
+
+    background-image: url('/media/background/background.svg');
 }
 

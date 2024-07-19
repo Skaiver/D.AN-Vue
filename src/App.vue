@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {RouterLink, RouterView} from 'vue-router'
+import { RouterLink, RouterView } from 'vue-router'
 </script>
 
 <template>
@@ -8,7 +8,7 @@ import {RouterLink, RouterView} from 'vue-router'
       <h2>Hallo Malte</h2>
       <p>Hier sind deine Ausbildungsnachweise</p>
     </div>
-    
+
     <nav>
       <RouterLink to="/">Dashbaord</RouterLink>
       <RouterLink to="/export">Export</RouterLink>
@@ -17,53 +17,37 @@ import {RouterLink, RouterView} from 'vue-router'
     </nav>
   </header>
 
-  <RouterView/>
+  <RouterView />
 </template>
 
 <style scoped>
-:root {
-  --header-welcome-message: 1.8rem;
-  --header-message: 1rem;
-  --week-entry-width: 600px;
-
-  @media screen and (min-width: 420px) {
-
-  }
-  @media screen and (min-width: 768px) {
-    --header-welcome-message: 2rem;
-    --header-message: 1.3rem;
-  }
-  @media screen and (min-width: 1024.00px) {
-    --week-entry-width: 550px;
-  }
-
-  @media screen and (min-width: 1440.00px) {
-    --week-entry-width: 800px;
-  }
-
-  @media screen and (min-width: 1600px) {
-    --week-entry-width: 900px;
-  }
-}
-
 header {
+  font-family: 'Roboto Mono', sans-serif;
+  font-weight: 300;
   margin-bottom: 1rem;
 
   .message {
-    h2, p {
-      font-weight: 300;
+    h2 {
+      font-size: 1.2rem;
+      font-weight: 400;
       display: inline-block;
       margin-top: 0;
-    }
+      margin-bottom: 0;
 
-    h2 {
-      font-family: "Roboto Mono", sans-serif;
-      font-weight: 300;
-      font-size: var(--header-welcome-message);
+      @media screen and (min-width: 768px) {
+        font-size: 1.5rem;
+      }
     }
 
     p {
-      font-size: var(--header-message);
+      font-size: 1rem;
+      font-weight: 300;
+      margin-top: 0;
+      margin-bottom: 0.5rem;
+
+      @media screen and (min-width: 768px) {
+        font-size: 1.2rem;
+      }
     }
 
     margin-bottom: 0.5rem;
@@ -77,7 +61,7 @@ header {
 nav {
   display: grid;
   grid-template-columns: 2fr 2fr;
-  gap: 10px
+  gap: 10px;
 }
 
 nav a {
@@ -91,33 +75,36 @@ nav a {
   background-color: #2f405b;
   border: #649ff0 1px solid;
   border-radius: 4px;
-  /* border-top: 0; 
-  border-top-left-radius: 0; 
-  border-top-right-radius: 0; 
-  border-bottom-right-radius: 0; */
-  color: #6f7fa5; 
-
+  color: #6f7fa5;
 }
 
-@media screen and (min-width: 1440px) {
+@media screen and (min-width: 425px) {
+  nav a {
+    height: 80px;
+    width: 100%;
+  }
+}
+
+@media screen and (min-width: 768px) {
   nav {
     display: flex;
-    justify-content: right;
+    justify-content: flex-end;
     gap: 0;
   }
 
   nav a {
-    width: 150px;
-    border-top: 0;
-    border-top-left-radius: 0;
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
-    color: #6f7fa5;
+    all: unset;
+    display: inline-block;
+    padding: 30px 40px;
+    border: 1px solid;
+    border-radius: 3px;
+    background-color: #2f405bd6;
 
-    &:not(:last-of-type) {
-      border-right: unset;
+    :not(&:last-of-type) {
+      border-right: 0;
     }
   }
 }
+
 
 </style>
