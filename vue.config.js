@@ -1,6 +1,5 @@
 module.exports = {
   // ...other vue-cli plugin options...
-  publicPath: '/',
   pwa: {
     name: 'My App',
     themeColor: '#4DBA87',
