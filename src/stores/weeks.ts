@@ -18,14 +18,14 @@ export const useWeeksStore = defineStore('weeks', () => {
   }
 
   function getWeeks(): Array<Object> | null {
-    const currentRawData = localStorage.getItem('d-an') // syntax: [{},{}]
+    const currentRawData = localStorage.getItem('d-an') ?? '' // syntax: [{},{}]
 
     let currentWeeks = JSON.parse(currentRawData)
 
     return currentWeeks
   }
 
-  function storeWeek(week: WeekInterface) {
+  function storeWeek(week: any) {
     let weeks = getWeeks()
 
     if (!(weeks instanceof Array)) {
@@ -58,7 +58,7 @@ export const useWeeksStore = defineStore('weeks', () => {
   }
 
   function getIndexOfWeekInStorage(week: WeekInterface) {
-    return getWeeks()?.findIndex((storedWeek) => {
+    return getWeeks()?.findIndex((storedWeek: any) => {
       return storedWeek.date.start === week.date.start && storedWeek.date.end === week.date.end
     })
   }
@@ -67,7 +67,7 @@ export const useWeeksStore = defineStore('weeks', () => {
     return getWeekFromStorage(week) ? true : false
   }
 
-  function isValidWeek(week: Object): boolean {
+  function isValidWeek(week: any): boolean {
     let isWeekValid = true
     const requiredWeekProperties = ['date', 'name', 'year', 'content', 'department']
     requiredWeekProperties.forEach((key) => {

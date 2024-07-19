@@ -2,7 +2,7 @@
 import EventBus from '@/events/EventBus'
 import { computed, ref, onUpdated, onMounted, watch } from 'vue'
 import { useWeeksStore } from '@/stores/weeks'
-import { Sorting } from '@/composables/sorting'
+import { Sorting } from '@/composables/Sorting'
 
 const weekStore = useWeeksStore()
 
