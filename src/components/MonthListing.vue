@@ -3,6 +3,7 @@ import { ref, onUpdated, onMounted } from 'vue'
 import type WeekInterface from '@/components/interfaces/WeekInterface'
 import EventBus from '@/events/EventBus'
 import type { modalFormType } from './interfaces/ModalFormType'
+import PDFHelper from '@/composables/PDFHelper'
 
 const props = defineProps({
   key: { type: Number, required: false },
@@ -16,6 +17,13 @@ dataWeeks.value = props.weeks as WeekInterface[]
 function emitOpenModalEvent(week: WeekInterface) {
   EventBus.trigger('Modal.loadDialog', week)
   EventBus.trigger('Modal.openDialog', null)
+}
+
+async function saveAsPdf(week: any) {
+  console.log('saving begin; week: ', week)
+  const pdfHelper = new PDFHelper()
+  const template = await pdfHelper.loadTemplate()
+  pdfHelper.createFile(template, week)
 }
 
 function formatDate(s: string) {
@@ -42,6 +50,7 @@ function getYearOfDate(s: string) {
         @click="emitOpenModalEvent(week)"
       >
         {{ formatDate(week.date.start) }} - {{ formatDate(week.date.end) }}
+        <span @click="saveAsPdf(week)">X</span>
       </li>
     </ul>
   </details>
