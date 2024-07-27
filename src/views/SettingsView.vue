@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { setStoredSettings } from "@/composables/setStoredSettings";
-
+import { setStoredSettings } from '@/composables/setStoredSettings'
 
 const name = ref(null)
 const year = ref(null)
@@ -21,33 +20,47 @@ function updateSettings() {
   <main>
     <h1>Einstellungen</h1>
 
-    <input v-model="department" type="text" name="" id="">
-    <input v-model="name" type="text" name="" id="">
-    <input v-model="year" type="number" name="" id="">
+    <form action="">
+      <label for="name">Name: </label>
+      <input v-model="name" type="text" name="name" id="name" />
 
-    <button type="button" @click="updateSettings()">Speichern</button>
+      <label for="department">Abteilung: </label>
+      <input v-model="department" type="text" name="department" id="department" />
+
+      <label for="year">Jahr: </label>
+      <input v-model="year" type="number" name="year" id="year" />
+
+      <button type="button" @click="updateSettings()">Speichern</button>
+    </form>
   </main>
 </template>
 
 <style scoped>
 main {
-  display: flex;
-  flex-direction: column;
-
   h1 {
     text-align: center;
   }
 
-  textarea {
-    all: unset;
-    background-color: #2f405bd6;
-    border: 1px solid #4ea1f6;
-    border-radius: 5px;
-    padding: 5px 10px;
-    display: flex;
-    justify-content: center;
+  form {
     margin: auto;
-    margin-bottom: 1rem;
+    display: flex;
+    flex-direction: column;
+    @media screen and (min-width: 768px) {
+      width: 480px;
+    }
+  }
+
+  input {
+    all: unset;
+    border: 1px solid #4ea1f6;
+    border-radius: 3px;
+    padding: 5px 2px;
+    margin-bottom: 0.6rem;
+    background-color: #2f405bcc;
+  }
+
+  input:-internal-autofill-selected {
+    background-color: #2f405bcc !important;
   }
 
   button {

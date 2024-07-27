@@ -12,11 +12,11 @@ function importFromJsonText() {
 
 <template>
   <main>
-    <h1>Vorhandene Daten exportieren</h1>
+    <h1>Vorhandene Daten überschreiben</h1>
 
-    <textarea v-model="jsonText" cols="50" rows="10"></textarea>
+    <textarea v-model="jsonText" cols="30" rows="10"></textarea>
 
-    <button type="button" @click="importFromJsonText()">Als JSON herunterladen</button>
+    <button type="button" @click="importFromJsonText()">Überschreiben</button>
   </main>
 </template>
 
