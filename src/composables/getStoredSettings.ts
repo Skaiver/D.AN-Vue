@@ -1,16 +1,16 @@
 import { hasWorkingStorage } from '@/composables/hasWorkingStorage'
 
 // @ts-nocheck
-export function getStoredData() {
+export function getStoredSettings() {
   if (!hasWorkingStorage('localStorage')) {
     console.error('a')
   }
 
-  if (!window.localStorage.getItem('d-an')) {
+  if (!window.localStorage.getItem('d-an-settings')) {
     console.error('b')
   }
 
-  const data = window.localStorage.getItem('d-an');
+  const data = window.localStorage.getItem('d-an-settings');
 
   return JSON.stringify(data) || ''
 }

@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import DashboardView from "@/views/DashboardView.vue";
 import ExportView from "@/views/ExportView.vue";
 import ImportView from '@/views/ImportView.vue';
+import SettingsView from '@/views/SettingsView.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -21,11 +22,11 @@ const router = createRouter({
       name: 'import',
       component: ImportView
     },
-    // {
-    //   path: '/settings',
-    //   name: 'settings',
-    //   component: SettingsView
-    // },
+    {
+      path: '/settings',
+      name: 'settings',
+      component: SettingsView
+    },
   ]
 })
 
