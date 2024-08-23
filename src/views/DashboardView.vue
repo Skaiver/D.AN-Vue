@@ -48,7 +48,7 @@ export default {
     <Modal :key="componentKey" />
 
     <MonthListing
-      v-if="storedWeeks.length"
+      v-if="storedWeeks"
       v-for="(weeks, monthNumber) in storedWeeks"
       :monthName="monthNumber"
       :weeks="weeks as any"
