@@ -20,7 +20,7 @@ onMounted(() => {
 <template>
   <header>
     <div class="message">
-      <h2 v-if="name" >Hallo {{ name }}</h2>
+      <h2 v-if="name !== 'Malte'">Hallo {{ name }}</h2>
       <h2 v-else class="tooltip">Hallo {{ name }} <span class="tooltiptext">Name ist änderbar in den Einstellungen 👍</span></h2>
       <p>Hier sind deine Ausbildungsnachweise</p>
     </div>
