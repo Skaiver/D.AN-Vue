@@ -1,6 +1,8 @@
 module.exports = {
   // ...other vue-cli plugin options...
-  publicPath: '/D.AN-Vue/',
+  publicPath: process.env.NODE_ENV === 'production'
+    ? '/D.AN-Vue/'
+    : '/',
   pwa: {
     name: 'My App',
     themeColor: '#4DBA87',
