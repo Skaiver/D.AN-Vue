@@ -3,7 +3,7 @@ import { ref } from 'vue'
 import { setStoredData } from "@/composables/setStoredData";
 
 
-const jsonText = ref(null)
+const jsonText = ref("")
 
 function importFromJsonText() {
   setStoredData(jsonText.value)
