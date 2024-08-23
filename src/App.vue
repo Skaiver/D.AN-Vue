@@ -1,11 +1,27 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
+import { onMounted, ref } from 'vue'
+import { getStoredSettings } from '@/composables/getStoredSettings'
+
+const name = ref('')
+
+onMounted(() => {
+  try {
+    const rawSettings = getStoredSettings()
+    const settings = JSON.parse(rawSettings)
+    console.log(settings.name)
+    name.value = settings.name.length <= 0 ? settings.name : 'Malte'
+  } catch (e) {
+    name.value = 'Malte'
+  }
+})
 </script>
 
 <template>
   <header>
     <div class="message">
-      <h2>Hallo Malte</h2>
+      <h2 v-if="name" >Hallo {{ name }}</h2>
+      <h2 v-else class="tooltip">Hallo {{ name }} <span class="tooltiptext">Name ist änderbar in den Einstellungen 👍</span></h2>
       <p>Hier sind deine Ausbildungsnachweise</p>
     </div>
 
@@ -105,6 +121,4 @@ nav a {
     }
   }
 }
-
-
 </style>

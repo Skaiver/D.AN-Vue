@@ -12,5 +12,5 @@ export function getStoredSettings() {
 
   const data = window.localStorage.getItem('d-an-settings');
 
-  return JSON.stringify(data) || ''
+  return data || ''
 }

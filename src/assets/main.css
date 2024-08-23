@@ -1,33 +1,106 @@
 @import './base.css';
 
 .btn {
-    all: unset;
-    padding: 5px 10px;
-    border-radius: 2px;
+  all: unset;
+  padding: 5px 10px;
+  border-radius: 2px;
 }
 
 .btn-danger {
-    background-color: rgb(255, 89, 89);
-    color: white;
+  background-color: rgb(255, 89, 89);
+  color: white;
 }
 
 .btn-success {
-    background-color: rgb(136, 197, 45);
-    color: white;
+  background-color: rgb(136, 197, 45);
+  color: white;
 }
 
 .quick-actions {
-    position: absolute;
-    bottom: 30px;
-    right: 30px;
+  position: absolute;
+  bottom: 30px;
+  right: 30px;
 
-    button {
-        all: unset;
-        padding: 5px 15px;
-        border-radius: 5px;
-        border: 2px solid #4ea1f6;
-        background-color: #4ea1f6;
-        color: white;
-        font-size: 1.5rem;
-    }
+  button {
+    all: unset;
+    padding: 5px 15px;
+    border-radius: 5px;
+    border: 2px solid #4ea1f6;
+    background-color: #4ea1f6;
+    color: white;
+    font-size: 1.5rem;
+  }
 }
+
+/* https://www.w3schools.com/howto/howto_css_tooltip.asp */
+/* Tooltip container */
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black; /* If you want dots under the hoverable text */
+}
+
+/* Tooltip text */
+.tooltip .tooltiptext {
+  font-size: 1rem;
+  visibility: hidden;
+  width: 90vw;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  padding: 5px 0;
+  border-radius: 6px;
+
+  /* Position the tooltip text */
+  position: absolute;
+  z-index: 1;
+  bottom: -220%;
+  left: 50%;
+  margin-left: -60px;
+
+  /* Fade in tooltip */
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+/* Tooltip arrow */
+.tooltip .tooltiptext::after {
+  content: '';
+  position: absolute;
+  top: -15%;
+  left: 20%;
+  rotate: 180deg;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+
+@media screen and (min-width: 375px) {
+  .tooltip .tooltiptext {
+    bottom: -140%;
+  }
+  .tooltip .tooltiptext::after {
+    top: -32%;
+  }
+}
+
+@media screen and (min-width: 768px) {
+    .tooltip .tooltiptext {
+        left: 41%;
+        width: 44vw;
+        bottom: -120%
+    }
+  }
+  @media screen and (min-width: 2560px) {
+    .tooltip .tooltiptext {
+        left: 39%;
+        width: 14vw;
+    }
+  }

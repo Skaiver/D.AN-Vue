@@ -28,7 +28,7 @@ const forceRerender = () => {
 
 EventBus.on('DashboardView.forceRerender', () => {
   forceRerender()
-});
+})
 </script>
 
 <script lang="ts">
@@ -48,14 +48,56 @@ export default {
     <Modal :key="componentKey" />
 
     <MonthListing
+      v-if="storedWeeks.length"
       v-for="(weeks, monthNumber) in storedWeeks"
       :monthName="monthNumber"
       :weeks="weeks as any"
       :key="componentKey"
     />
+    <div v-else>
+      <div class="do-work-message">
+        <h3>Ziemlich tote Hose hier...</h3>
+        <p>Hast du nicht ein paar Berichtshefte zu schreiben?</p>
+        <small>Tipp: Drücke auf das Plus unten rechts</small>
+      </div>
+    </div>
   </main>
 
   <div class="quick-actions">
     <button @click="emitOpenModalEvent()">+</button>
   </div>
 </template>
+
+<style scoped>
+.do-work-message {
+  background-color: #2f405b;
+  border: 1px solid #4ea1f6;
+  border-radius: 4px;
+  padding: 5px 10px;
+
+  @media screen and (min-width: 768px) {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    width: 450px;
+  }
+
+  @media screen and (min-width: 1024px) {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    width: 750px;
+  }
+
+  h3 {
+    margin: 0;
+    margin-bottom: 1rem;
+    font-weight: 600;
+  }
+
+  p {
+    margin: 0;
+    margin-bottom: 0.5rem;
+  }
+}
+</style>
