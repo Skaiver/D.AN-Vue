@@ -126,7 +126,7 @@ function triggerSave() {
     />
 
     <div class="actions">
-      <button class="btn btn-danger" @click="closeModal()" autofocus>Close</button>
+      <button class="btn btn-danger" @click="closeModal()">Close</button>
       <button class="btn btn-success" @click="triggerSave()">Speichern</button>
     </div>
   </dialog>
