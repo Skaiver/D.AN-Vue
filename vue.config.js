@@ -7,7 +7,7 @@
  *  DO NOT USE THIS FILE FOR CONFIGURATION IN THIS PROJECT!!!
  * 
  * 
-/*
+*/
 
 module.exports = {
   // ...other vue-cli plugin options...
