@@ -35,7 +35,7 @@ export default class PDFHelper {
             .catch((err) => console.error(`Fetch problem: ${err.message}`));
     }
 
-    async loadTemplateFont(template_url = "/media/fonts/roboto-mono/roboto-mono-v22-latin-500.ttf") {
+    async loadTemplateFont(template_url = "./media/fonts/roboto-mono/roboto-mono-v22-latin-500.ttf") {
         return fetch(template_url)
             .then((response) => {
                 if (!response.ok) {
