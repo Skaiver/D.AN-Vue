@@ -12,7 +12,7 @@ onMounted(() => {
     const settings = JSON.parse(rawSettings)
     console.log(settings.name)
     console.log(settings.name.length)
-    name.value = settings.name.length <= 1 ? settings.name : 'Malte'
+    name.value = settings.name.length >= 1 ? settings.name : 'Malte'
     hasName.value = true;
   } catch (e) {
     name.value = 'Malte'
