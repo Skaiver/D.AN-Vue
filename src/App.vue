@@ -4,13 +4,16 @@ import { onMounted, ref } from 'vue'
 import { getStoredSettings } from '@/composables/getStoredSettings'
 
 const name = ref('')
+const hasName = ref(false)
 
 onMounted(() => {
   try {
     const rawSettings = getStoredSettings()
     const settings = JSON.parse(rawSettings)
     console.log(settings.name)
-    name.value = settings.name.length <= 0 ? settings.name : 'Malte'
+    console.log(settings.name.length)
+    name.value = settings.name.length <= 1 ? settings.name : 'Malte'
+    hasName.value = true;
   } catch (e) {
     name.value = 'Malte'
   }
@@ -20,7 +23,7 @@ onMounted(() => {
 <template>
   <header>
     <div class="message">
-      <h2 v-if="name !== 'Malte'">Hallo {{ name }}</h2>
+      <h2 v-if="hasName">Hallo {{ name }}</h2>
       <h2 v-else class="tooltip">Hallo {{ name }} <span class="tooltiptext">Name ist änderbar in den Einstellungen 👍</span></h2>
       <p>Hier sind deine Ausbildungsnachweise</p>
     </div>
