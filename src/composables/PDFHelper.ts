@@ -23,7 +23,7 @@ export default class PDFHelper {
         return {"first": pdf_a, "second": pdf_b, "result": mergedPdfFile};
     }
 
-    async loadTemplate(template_url = "/media/pdf/report_book_entry.pdf") {
+    async loadTemplate(template_url = "./media/pdf/report_book_entry.pdf") {
         return fetch(template_url)
             .then((response) => {
                 if (!response.ok) {
