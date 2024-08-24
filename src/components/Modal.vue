@@ -63,67 +63,74 @@ function closeModal() {
 function triggerSave() {
   saveWeek(form.value)
   closeModal()
-  EventBus.trigger('DashboardView.forceRerender', null);
+  EventBus.trigger('DashboardView.forceRerender', null)
 }
 </script>
 
 <template>
   <dialog ref="dialog">
-    <label for="name">Name</label>
-    <input
-      type="text"
-      name="name"
-      id="name"
-      v-model="form.name"
-      placeholder="Namen hier eingeben..."
-    />
+    <h2>Ausbildungsnachweis (Wöchentlich)</h2>
 
-    <label for="year">Ausbildungsjahr</label>
-    <input
-      type="number"
-      name="year"
-      id="year"
-      v-model="form.year"
-      placeholder="Jahr hier eingeben..."
-    />
+    <div class="first-row">
+      <div>
+        <label for="name">Name</label>
+        <input
+          type="text"
+          name="name"
+          id="name"
+          v-model="form.name"
+          placeholder="Namen hier eingeben..."
+        />
+      </div>
 
-    <label for="date_start">Startdatum</label>
-    <input
-      type="date"
-      name="date_start"
-      id="date_start"
-      v-model="form.date.start"
-      placeholder="Startdatum hier eingeben..."
-    />
+      <div>
+        <label for="year">Ausbildungsjahr</label>
+        <input
+          type="number"
+          name="year"
+          id="year"
+          v-model="form.year"
+          placeholder="Jahr hier eingeben..."
+        />
+      </div>
 
-    <label for="date_end">Enddatum</label>
-    <input
-      type="date"
-      name="date_end"
-      id="date_end"
-      v-model="form.date.end"
-      placeholder="Enddatum hier eingeben..."
-    />
+      <div>
+        <label for="date_start">Startdatum</label>
+        <input
+          type="date"
+          name="date_start"
+          id="date_start"
+          v-model="form.date.start"
+          placeholder="Startdatum hier eingeben..."
+        />
+      </div>
 
-    <label for="text">Inhalt</label>
-    <textarea name="text" id="text" v-model="form.content" placeholder="Inhalte hier..."></textarea>
+      <div>
+        <label for="date_end">Enddatum</label>
+        <input
+          type="date"
+          name="date_end"
+          id="date_end"
+          v-model="form.date.end"
+          placeholder="Enddatum hier eingeben..."
+        />
+      </div>
+    </div>
 
-    <label for="name">Abteilung</label>
-    <input
-      type="text"
-      name="department"
-      id="department"
-      v-model="form.department"
-      placeholder="Abteilung hier eingeben..."
-    />
+    <div class="second-row">
+      <div>
+        <label for="text">Inhalt</label>
+        <textarea
+          name="text"
+          id="text"
+          v-model="form.content"
+          placeholder="Inhalte hier..."
+        ></textarea>
+      </div>
+    </div>
 
     <label for="isDone">Eintrag abhaken?</label>
-    <input
-      type="checkbox"
-      name="isDone"
-      id="isDone"
-      v-model="form.isDone"
-    />
+    <input type="checkbox" name="isDone" id="isDone" v-model="form.isDone" />
 
     <div class="actions">
       <button class="btn btn-danger" @click="closeModal()">Close</button>
@@ -146,6 +153,18 @@ dialog {
   background-color: #2f405b;
   color: #6f7fa5;
   border: unset;
+  border-radius: 5px;
+
+  @media screen and (min-width: 768px) {
+    width: 90%;
+  }
+}
+
+dialog h2 {
+  margin: 0;
+  margin-bottom: 1rem;
+  color: white;
+  font-weight: 300;
 }
 
 dialog input,
@@ -153,7 +172,6 @@ dialog label,
 dialog textarea {
   display: block;
   width: 97%;
-  /* margin: 0 auto; */
   background-color: #2f405b;
   border-color: #6f7fa5;
 }
@@ -162,17 +180,18 @@ dialog input {
   color: white;
   height: 24px;
   width: 95%;
-  /* margin-left: auto; */
-  /* margin-right: auto; */
   margin-bottom: 0.2rem;
   border: 1px solid black;
-  padding: 5px;
-  border-radius: 2px;
+  padding: 5px 7px;
+  border-radius: 3px;
   background-color: #2f405b;
   border: 1px solid #6f7fa5;
+  &::placeholder {
+    color: white;
+  }
 }
 
-dialog input[type="checkbox"] {
+dialog input[type='checkbox'] {
   height: 15px;
   aspect-ratio: 1 / 1;
   width: unset;
@@ -185,8 +204,45 @@ dialog textarea {
   border: 1px solid #6f7fa5;
 }
 
+.first-row {
+  div {
+    width: 25%;
+  }
+
+  @media screen and (min-width: 768px) {
+    display: flex;
+    gap: 10px;
+
+    label {
+      margin-bottom: 5px;
+      width: 100%;
+    }
+
+    label,
+    input {
+      display: block;
+    }
+
+    input {
+      padding-right: 0;
+    }
+  }
+}
+
+.second-row {
+  div {
+    /* width: 25%; */
+  }
+
+  @media screen and (min-width: 768px) {
+    textarea {
+      width: 99%;
+    }
+  }
+}
+
 dialog::backdrop {
   background-color: black;
-  opacity: 0.75;
+  opacity: 0.45;
 }
 </style>
