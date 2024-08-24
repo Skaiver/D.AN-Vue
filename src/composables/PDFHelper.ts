@@ -15,9 +15,7 @@ export default class PDFHelper {
         copiedPagesB.forEach((page) => mergedPdf.addPage(page));
 
         const mergedPdfFileContents = await mergedPdf.save();
-
         let mergedPdfFile = await PDFDocument.load(mergedPdfFileContents);
-
 
         // return
         return {"first": pdf_a, "second": pdf_b, "result": mergedPdfFile};
@@ -51,15 +49,16 @@ export default class PDFHelper {
     async createFile(template, args: any) {
         let pdfDoc = await PDFDocument.load(template);
         this._initPDFDocumentFields(pdfDoc).then((pdfDoc) => {
-            console.log(pdfDoc)
+            console.log("beep: ");
+            console.log(args)
 
             pdfDoc.getForm().getTextField("reportbook.apprentice_name").setText(args.name)
             pdfDoc.getForm().getTextField("reportbook.training_year").setText(args.year.toString())
-            pdfDoc.getForm().getTextField("reportbook.operational_activities.description").setText("args.activities.operational_activities.stuff")
-            pdfDoc.getForm().getTextField("reportbook.operational_activities.hours").setText("args.activities.operational_activities.hours.toString()")
+            pdfDoc.getForm().getTextField("reportbook.operational_activities.description").setText(args.content)
+            pdfDoc.getForm().getTextField("reportbook.operational_activities.hours").setText("40")
 
             pdfDoc.save().then(value => {
-                saveAs(new Blob([value as BlobPart]), "test.pdf");
+                saveAs(new Blob([value as BlobPart]), (args.date.start ?? 'eintrag') + ".pdf");
             });
             return 
         });
