@@ -10,7 +10,6 @@ const defultFormObject: modalFormType = {
   name: '',
   year: '',
   content: '',
-  department: '',
   isDone: false,
   date: {
     start: '',
@@ -23,7 +22,6 @@ const dialog: Ref<HTMLDialogElement | null> = ref(null)
 form.value.name = ''
 form.value.year = ''
 form.value.content = ''
-form.value.department = ''
 form.value.isDone = false
 form.value.date['start'] = ''
 form.value.date['end'] = ''
@@ -34,7 +32,6 @@ onMounted(() => {
     form.value.name = week.name
     form.value.year = week.year
     form.value.content = week.content
-    form.value.department = week.department
     form.value.date = week.date
     form.value.isDone = week.isDone
     form.value.date['start'] = week.date.start
@@ -205,13 +202,13 @@ dialog textarea {
 }
 
 .first-row {
-  div {
-    width: 25%;
-  }
-
   @media screen and (min-width: 768px) {
     display: flex;
     gap: 10px;
+
+    div {
+      width: 25%;
+    }
 
     label {
       margin-bottom: 5px;
@@ -237,6 +234,11 @@ dialog textarea {
   @media screen and (min-width: 768px) {
     textarea {
       width: 99%;
+      min-height: 200px;
+
+      &::placeholder {
+        color: white;
+      }
     }
   }
 }
