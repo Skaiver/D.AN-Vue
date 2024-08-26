@@ -69,7 +69,7 @@ export const useWeeksStore = defineStore('weeks', () => {
 
   function isValidWeek(week: any): boolean {
     let isWeekValid = true
-    const requiredWeekProperties = ['date', 'name', 'year', 'content', 'department']
+    const requiredWeekProperties = ['date', 'name', 'year', 'content']
     requiredWeekProperties.forEach((key) => {
       if (!Object.prototype.hasOwnProperty.call(week, key)) {
         isWeekValid = false
