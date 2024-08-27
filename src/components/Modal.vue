@@ -116,7 +116,27 @@ function triggerSave() {
 
     <div class="second-row">
       <div>
-        <label for="text">Inhalt</label>
+        <label for="text">Betriebliche Tätigkeiten</label>
+        <textarea
+          name="text"
+          id="text"
+          v-model="form.content"
+          placeholder="Inhalte hier..."
+        ></textarea>
+      </div>
+
+      <div>
+        <label for="text">Betriebliche Schulungen</label>
+        <textarea
+          name="text"
+          id="text"
+          v-model="form.content"
+          placeholder="Inhalte hier..."
+        ></textarea>
+      </div>
+
+      <div>
+        <label for="text">Berufsschulunterricht</label>
         <textarea
           name="text"
           id="text"
@@ -126,12 +146,14 @@ function triggerSave() {
       </div>
     </div>
 
-    <label for="isDone">Eintrag abhaken?</label>
-    <input type="checkbox" name="isDone" id="isDone" v-model="form.isDone" />
+    <div class="checkbox-div">
+      <label for="isDone">Eintrag abhaken?</label>
+      <input type="checkbox" name="isDone" id="isDone" v-model="form.isDone" />
+    </div>
 
     <div class="actions">
-      <button class="btn btn-danger" @click="closeModal()">Close</button>
-      <button class="btn btn-success" @click="triggerSave()">Speichern</button>
+      <button class="btn btn-abort" @click="closeModal()">Close</button>
+      <button class="btn btn-save" @click="triggerSave()">Wocheneintrag speichern</button>
     </div>
   </dialog>
 </template>
@@ -141,6 +163,14 @@ function triggerSave() {
   display: flex;
   justify-content: space-between;
   margin-top: 1.5rem;
+}
+
+.checkbox-div {
+  display: flex;
+  justify-content: right;
+  label {
+    width: unset;
+  }
 }
 
 dialog {
@@ -182,7 +212,7 @@ dialog input {
   padding: 5px 7px;
   border-radius: 3px;
   background-color: #2f405b;
-  border: 1px solid #6f7fa5;
+  border: 2px solid #6f7fa5;
   &::placeholder {
     color: white;
   }
@@ -198,7 +228,7 @@ dialog textarea {
   color: white;
   padding: 2px;
   border-radius: 2px;
-  border: 1px solid #6f7fa5;
+  border: 2px solid #6f7fa5;
 }
 
 .first-row {
@@ -221,20 +251,28 @@ dialog textarea {
     }
 
     input {
+      padding: 5px 10px;
       padding-right: 0;
     }
   }
 }
 
 .second-row {
-  div {
-    /* width: 25%; */
-  }
-
   @media screen and (min-width: 768px) {
+    margin-top: 1.5rem;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px; /* Passe den Wert nach Bedarf an */
+
+    > div {
+      width: 100%;
+    }
+
     textarea {
       width: 99%;
       min-height: 200px;
+      padding: 5px 10px;
+      padding-right: 0;
 
       &::placeholder {
         color: white;

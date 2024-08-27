@@ -5,6 +5,7 @@
  * 
  * 
  *  DO NOT USE THIS FILE FOR CONFIGURATION IN THIS PROJECT!!!
+ *  -> use "vite.config.ts" instead!
  * 
  * 
 */
