@@ -2,6 +2,7 @@ import { ref } from 'vue'
 import { defineStore } from 'pinia'
 import { hasWorkingStorage } from '@/composables/hasWorkingStorage'
 import type WeekInterface from '@/components/interfaces/WeekInterface'
+import type ModalForm from '@/components/classes/ModalForm'
 
 export const useWeeksStore = defineStore('weeks', () => {
   const useLocalStorage = hasWorkingStorage('localStorage')
@@ -25,7 +26,7 @@ export const useWeeksStore = defineStore('weeks', () => {
     return currentWeeks
   }
 
-  function storeWeek(week: any) {
+  function storeWeek(week: ModalForm) {
     let weeks = getWeeks()
 
     if (!(weeks instanceof Array)) {
@@ -43,9 +44,9 @@ export const useWeeksStore = defineStore('weeks', () => {
     if (isDuplicate(week)) {
       // update week in weeks by index
       const index = getIndexOfWeekInStorage(week)
-      
+
       if (index !== undefined && index >= 0) {
-        console.log("overwrite week at index " + index);
+        console.log('overwrite week at index ' + index)
         weeks[index] = week
       } else {
         throw new Error('Could not overwrite week. invalid index!')
@@ -57,39 +58,21 @@ export const useWeeksStore = defineStore('weeks', () => {
     localStorage.setItem('d-an', JSON.stringify(weeks))
   }
 
-  function getIndexOfWeekInStorage(week: WeekInterface) {
+  function getIndexOfWeekInStorage(week: ModalForm) {
     return getWeeks()?.findIndex((storedWeek: any) => {
       return storedWeek.date.start === week.date.start && storedWeek.date.end === week.date.end
     })
   }
 
-  function isDuplicate(week: WeekInterface) {
+  function isDuplicate(week: ModalForm) {
     return getWeekFromStorage(week) ? true : false
   }
 
-  function isValidWeek(week: any): boolean {
-    let isWeekValid = true
-    const requiredWeekProperties = ['date', 'name', 'year', 'content']
-    requiredWeekProperties.forEach((key) => {
-      if (!Object.prototype.hasOwnProperty.call(week, key)) {
-        isWeekValid = false
-      }
-
-      if (key === 'date') {
-        // check if both start and end are present
-        const cond =
-          Object.prototype.hasOwnProperty.call(week, 'date') &&
-          Object.prototype.hasOwnProperty.call(week.date, 'start') &&
-          Object.prototype.hasOwnProperty.call(week.date, 'end')
-        if (!cond) {
-          isWeekValid = false
-        }
-      }
-    })
-    return isWeekValid
+  function isValidWeek(week: ModalForm): boolean {
+    return week.isValid();
   }
 
-  function getWeekFromStorage(week: WeekInterface): Object | null {
+  function getWeekFromStorage(week: ModalForm): Object | null {
     const storedWeeks = getStorageWeeks()
 
     for (const i in storedWeeks) {

@@ -3,39 +3,38 @@ import { ref, onMounted, onUpdated, type Ref } from 'vue'
 import EventBus from '@/events/EventBus'
 import { useWeeksStore } from '@/stores/weeks'
 import type { modalFormType } from './interfaces/ModalFormType'
+import ModalForm from '@/components/classes/ModalForm'
 
 const weekStore = useWeeksStore()
 
-const defultFormObject: modalFormType = {
-  name: '',
-  year: '',
-  content: '',
-  isDone: false,
-  date: {
-    start: '',
-    end: ''
-  }
-}
-const form: Ref<modalFormType> = ref(defultFormObject)
+const form: Ref<ModalForm> = ref(ModalForm.getNew())
 const dialog: Ref<HTMLDialogElement | null> = ref(null)
-
-form.value.name = ''
-form.value.year = ''
-form.value.content = ''
-form.value.isDone = false
-form.value.date['start'] = ''
-form.value.date['end'] = ''
 
 onMounted(() => {
   EventBus.on('Modal.loadDialog', (week: modalFormType) => {
     console.log('loading:', week)
-    form.value.name = week.name
-    form.value.year = week.year
-    form.value.content = week.content
-    form.value.date = week.date
-    form.value.isDone = week.isDone
-    form.value.date['start'] = week.date.start
-    form.value.date['end'] = week.date.end
+    // form.value.name = week.name
+    // form.value.year = week.year
+    // form.value.companyContent = week.companyContent
+    // form.value.companyLearnings = week.companyLearnings
+    // form.value.schoolContent = week.schoolContent
+    // form.value.date = week.date
+    // form.value.isDone = week.isDone
+    // form.value.date['start'] = week.date.start
+    // form.value.date['end'] = week.date.end
+
+    // Dynamische Zuweisung der Werte aus week zu form.value
+    Object.keys(ModalForm.getNew()).forEach((key) => {
+      if (key !== 'date') {
+        // Direkte Zuweisung für einfache Felder
+        (form.value as any)[key] = (week as any)[key];
+      } else {
+        // Spezielle Behandlung für das date-Objekt
+        form.value.date = { ...week.date } // Kopiere das date-Objekt
+        form.value.date.start = week.date.start
+        form.value.date.end = week.date.end
+      }
+    })
   })
 
   EventBus.on('Modal.openDialog', () => {
@@ -49,7 +48,7 @@ onMounted(() => {
 
 onUpdated(() => {})
 
-function saveWeek(week: modalFormType) {
+function saveWeek(week: ModalForm) {
   weekStore.storeWeek(week)
 }
 
@@ -120,7 +119,7 @@ function triggerSave() {
         <textarea
           name="text"
           id="text"
-          v-model="form.content"
+          v-model="form.companyContent"
           placeholder="Inhalte hier..."
         ></textarea>
       </div>
@@ -130,7 +129,7 @@ function triggerSave() {
         <textarea
           name="text"
           id="text"
-          v-model="form.content"
+          v-model="form.companyLearnings"
           placeholder="Inhalte hier..."
         ></textarea>
       </div>
@@ -140,7 +139,7 @@ function triggerSave() {
         <textarea
           name="text"
           id="text"
-          v-model="form.content"
+          v-model="form.schoolContent"
           placeholder="Inhalte hier..."
         ></textarea>
       </div>

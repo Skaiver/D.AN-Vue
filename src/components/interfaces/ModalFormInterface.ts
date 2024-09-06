@@ -1,4 +1,4 @@
-export type modalFormType = {
+export interface modalFormType {
   name: string
   year: string
   companyContent: string
