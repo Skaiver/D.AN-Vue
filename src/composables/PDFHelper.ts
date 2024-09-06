@@ -2,6 +2,7 @@ import {PDFDocument} from "pdf-lib";
 // @ts-ignore
 import fontkit from '@pdf-lib/fontkit';
 import { saveAs } from 'file-saver'
+import type ModalForm from "@/components/classes/ModalForm";
 
 
 export default class PDFHelper {
@@ -46,7 +47,7 @@ export default class PDFHelper {
     }
 
     // @ts-ignore
-    async createFile(template, args: any) {
+    async createFile(template, args: ModalForm) {
         let pdfDoc = await PDFDocument.load(template);
         this._initPDFDocumentFields(pdfDoc).then((pdfDoc) => {
             console.log("beep: ");
@@ -54,7 +55,7 @@ export default class PDFHelper {
 
             pdfDoc.getForm().getTextField("reportbook.apprentice_name").setText(args.name)
             pdfDoc.getForm().getTextField("reportbook.training_year").setText(args.year.toString())
-            pdfDoc.getForm().getTextField("reportbook.operational_activities.description").setText(args.content)
+            pdfDoc.getForm().getTextField("reportbook.operational_activities.description").setText(args.companyContent)
             pdfDoc.getForm().getTextField("reportbook.operational_activities.hours").setText("40")
 
             pdfDoc.save().then(value => {

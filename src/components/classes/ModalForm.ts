@@ -51,7 +51,14 @@ export default class ModalForm implements modalFormType {
   
 
   // Static method to create a new ModalForm from an object
-  static fromObject(obj: Partial<modalFormType>): ModalForm {
+  static fromObject(obj: modalFormType): ModalForm {
+    if (!obj) {
+      console.error("Das übergebene Objekt ist null oder undefined.");
+      return this.getNew(); // Rückgabe eines leeren Objekts
+    }
+    console.log("Objekt empfangen:", obj);
+    console.log("Name:", obj.name);
+    
     return new this({
       name: obj.name || '',
       year: obj.year || '',
@@ -63,8 +70,9 @@ export default class ModalForm implements modalFormType {
         start: obj.date?.start || '',
         end: obj.date?.end || ''
       }
-    })
+    } as modalFormType);
   }
+  
 
   // Static method to create a new ModalForm from an array
   static fromArray(arr: Array<string | boolean>): ModalForm {
