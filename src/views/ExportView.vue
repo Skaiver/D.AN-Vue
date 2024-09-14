@@ -28,7 +28,7 @@ main {
 
   button {
     all: unset;
-    width: 200px;
+    width: 250px;
     height: 30px;
     background-color: #2f405bd6;
     border: 1px solid #4ea1f6;

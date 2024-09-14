@@ -13,10 +13,15 @@ function emitOpenModalEvent() {
   EventBus.trigger('Modal.openDialog', null)
 }
 
+function hasWeeks() {
+  return storedWeeks.value === ([] as Object[])
+}
+
 onMounted(() => {
   const weeks = weekStore.getWeeks() ?? []
   const sortedWeeks = Sorting(weeks)
   storedWeeks.value = sortedWeeks as Object[]
+  console.log(storedWeeks.value)
 })
 
 const forceRerender = () => {
@@ -48,7 +53,7 @@ export default {
     <Modal :key="componentKey" />
 
     <MonthListing
-      v-if="storedWeeks"
+      v-if="hasWeeks()"
       v-for="(weeks, monthNumber) in storedWeeks"
       :monthName="monthNumber"
       :weeks="weeks as any"

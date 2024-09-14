@@ -4,11 +4,25 @@
   all: unset;
   padding: 5px 10px;
   border-radius: 2px;
+
+  &:active {
+    opacity: 0.85;
+    transform: scale(0.95);
+  }
 }
 
 .btn-danger {
-  background-color: rgb(255, 89, 89);
-  color: white;
+  color: rgb(255, 89, 89);
+  width: 200px;
+  height: 30px;
+  background-color: #2f405bd6;
+  border: 1px solid rgb(255, 89, 89);
+  border-radius: 5px;
+  padding: 5px 10px;
+  display: flex;
+  justify-content: center;
+  line-height: 1.9;
+  margin: auto;
 }
 
 .btn-success {
@@ -21,9 +35,11 @@
   color: #4ea1f6;
   padding: 8px 15px;
   text-align: center;
-  border-radius: 3px;;
+  border-radius: 3px;
   border-width: 2px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2), 0 6px 20px rgba(0, 0, 0, 0.19);
+  box-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.2),
+    0 6px 20px rgba(0, 0, 0, 0.19);
 }
 
 .btn-abort {
@@ -110,15 +126,15 @@
 }
 
 @media screen and (min-width: 768px) {
-    .tooltip .tooltiptext {
-        left: 41%;
-        width: 44vw;
-        bottom: -120%
-    }
+  .tooltip .tooltiptext {
+    left: 41%;
+    width: 44vw;
+    bottom: -120%;
   }
-  @media screen and (min-width: 2560px) {
-    .tooltip .tooltiptext {
-        left: 39%;
-        width: 14vw;
-    }
+}
+@media screen and (min-width: 2560px) {
+  .tooltip .tooltiptext {
+    left: 39%;
+    width: 14vw;
   }
+}

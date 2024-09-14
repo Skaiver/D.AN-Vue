@@ -173,6 +173,7 @@ function triggerSave() {
 }
 
 dialog {
+  --border-radius: 3px;
   height: 80%;
   width: 80%;
   margin: 5% auto auto;
@@ -182,6 +183,7 @@ dialog {
   border-radius: 5px;
 
   @media screen and (min-width: 768px) {
+    --border-radius: 7px;
     width: 90%;
   }
 }
@@ -209,7 +211,7 @@ dialog input {
   margin-bottom: 0.2rem;
   border: 1px solid black;
   padding: 5px 7px;
-  border-radius: 3px;
+  border-radius: var(--border-radius);
   background-color: #2f405b;
   border: 2px solid #6f7fa5;
   &::placeholder {
@@ -223,10 +225,11 @@ dialog input[type='checkbox'] {
   width: unset;
 }
 
+
 dialog textarea {
   color: white;
   padding: 2px;
-  border-radius: 2px;
+  border-radius: var(--border-radius);
   border: 2px solid #6f7fa5;
 }
 
