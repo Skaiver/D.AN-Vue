@@ -10,8 +10,7 @@ const weekStore = useWeeksStore()
 const form: Ref<ModalForm> = ref(ModalForm.getNew())
 const dialog: Ref<HTMLDialogElement | null> = ref(null)
 
-onMounted(() => {
-  EventBus.on('Modal.loadDialog', (week: modalFormType) => {
+EventBus.on('Modal.loadDialog', (week: modalFormType) => {
     console.log('loading:', week)
     // form.value.name = week.name
     // form.value.year = week.year
@@ -44,9 +43,6 @@ onMounted(() => {
   EventBus.on('Modal.closeDialog', () => {
     dialog.value?.close()
   })
-})
-
-onUpdated(() => {})
 
 function saveWeek(week: ModalForm) {
   weekStore.storeWeek(week)
@@ -224,7 +220,6 @@ dialog input[type='checkbox'] {
   aspect-ratio: 1 / 1;
   width: unset;
 }
-
 
 dialog textarea {
   color: white;

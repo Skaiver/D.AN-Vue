@@ -22,10 +22,6 @@ export const useWeeksStore = defineStore('weeks', () => {
     let currentRawData = localStorage.getItem('d-an') ?? '[]' // syntax: [{},{}]
 
     if(currentRawData === '') currentRawData = "[]";
-
-    console.log(currentRawData);
-    
-
     let currentWeeks = JSON.parse(currentRawData)
 
     return currentWeeks

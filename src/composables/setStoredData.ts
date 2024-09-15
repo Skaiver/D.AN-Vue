@@ -11,7 +11,7 @@ export function setStoredData(newData: any) {
     console.error('b')
   }
 
-  window.localStorage.setItem('d-an', newData)
+  window.localStorage.setItem('d-an', JSON.stringify(newData))
 
   return getStoredData()
 }

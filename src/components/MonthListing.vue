@@ -6,9 +6,9 @@ import ModalForm from '@/components/classes/ModalForm'
 import PDFHelper from '@/composables/PDFHelper'
 
 const props = defineProps({
-  key: { type: Number, required: false },
+  myKey: { type: Number, required: false },
   weeks: { type: Array, required: true },
-  monthName: { type: Number, required: true }
+  monthNumber: { type: String, required: true }
 })
 
 const dataWeeks = ref([] as WeekInterface[])
@@ -21,12 +21,7 @@ function emitOpenModalEvent(week: WeekInterface) {
 
 async function saveAsPdf(week: any) {
   console.log('saving begin; week: ', week)
-
-  console.log(week.name);
-  
-
   const modalForm = ModalForm.fromObject(week)
-  console.log(modalForm)
 
   const pdfHelper = new PDFHelper()
   const template = await pdfHelper.loadTemplate()
@@ -48,11 +43,11 @@ function getYearOfDate(s: string) {
 
 <template>
   <details class="month-listing">
-    <summary>{{ props.monthName }} {{ getYearOfDate(dataWeeks[0]?.date?.start) }}</summary>
+    <summary>{{ props.monthNumber }} {{ getYearOfDate(dataWeeks[0]?.date?.start) }}</summary>
     <ul>
       <li
         v-for="week in dataWeeks"
-        v-bind:key="week.id"
+        v-bind:myKey="week.id"
         :data-checked="week.isDone ?? false"
         @click="emitOpenModalEvent(week)"
       >

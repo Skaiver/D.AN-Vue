@@ -17,7 +17,8 @@ function updateSettings() {
 }
 
 function deleteData() {
-  setStoredData("{}")
+  setStoredData([])
+  setStoredSettings({})
 }
 </script>
 

@@ -6,7 +6,7 @@ import { setStoredData } from "@/composables/setStoredData";
 const jsonText = ref("")
 
 function importFromJsonText() {
-  setStoredData(jsonText.value)
+  setStoredData(JSON.parse(jsonText.value))
 }
 </script>
 

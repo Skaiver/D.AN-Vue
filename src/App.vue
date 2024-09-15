@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
-import { onMounted, ref } from 'vue'
+import { onBeforeUpdate, onMounted, ref } from 'vue'
 import { getStoredSettings } from '@/composables/getStoredSettings'
 
 const name = ref('')
@@ -10,12 +10,10 @@ onMounted(() => {
   try {
     const rawSettings = getStoredSettings()
     const settings = JSON.parse(rawSettings)
-    console.log(settings.name)
-    console.log(settings.name.length)
-    name.value = settings.name.length >= 1 ? settings.name : 'Malte'
+    name.value = settings.name.length >= 1 ? settings.name : 'Du'
     hasName.value = true;
   } catch (e) {
-    name.value = 'Malte'
+    name.value = 'du'
   }
 })
 </script>

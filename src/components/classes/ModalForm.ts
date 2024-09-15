@@ -9,14 +9,17 @@ export default class ModalForm implements modalFormType {
   isDone: boolean
   date: { start: string; end: string }
 
-  constructor({}: modalFormType) {
-    this.name = ''
-    this.year = ''
-    this.companyContent = ''
-    this.companyLearnings = ''
-    this.schoolContent = ''
-    this.isDone = false
-    this.date = { start: '', end: '' }
+  constructor(obj: modalFormType) {
+    this.name = obj.name || ''
+    this.year = obj.year || ''
+    this.companyContent = obj.companyContent || ''
+    this.companyLearnings = obj.companyLearnings || ''
+    this.schoolContent = obj.schoolContent || ''
+    this.isDone = obj.isDone || false
+    this.date = {
+      start: obj.date?.start || '',
+      end: obj.date?.end || ''
+    }
   }
 
   static getNew() {
@@ -33,34 +36,46 @@ export default class ModalForm implements modalFormType {
 
   isValid() {
     if (
-      this.name && typeof this.name === 'string' && this.name.trim() !== '' &&
-      this.year && typeof this.year === 'number' &&
-      this.companyContent && typeof this.companyContent === 'string' && this.companyContent.trim() !== '' &&
-      this.companyLearnings && typeof this.companyLearnings === 'string' && this.companyLearnings.trim() !== '' &&
-      this.schoolContent && typeof this.schoolContent === 'string' && this.schoolContent.trim() !== '' &&
-      this.date && 
-      this.date.start && typeof this.date.start === 'string' && this.date.start.trim() !== '' &&
-      this.date.end && typeof this.date.end === 'string' && this.date.end.trim() !== ''
+      this.name &&
+      typeof this.name === 'string' &&
+      this.name.trim() !== '' &&
+      this.year &&
+      typeof this.year === 'number' &&
+      this.companyContent &&
+      typeof this.companyContent === 'string' &&
+      this.companyContent.trim() !== '' &&
+      this.companyLearnings &&
+      typeof this.companyLearnings === 'string' &&
+      this.companyLearnings.trim() !== '' &&
+      this.schoolContent &&
+      typeof this.schoolContent === 'string' &&
+      this.schoolContent.trim() !== '' &&
+      this.date &&
+      this.date.start &&
+      typeof this.date.start === 'string' &&
+      this.date.start.trim() !== '' &&
+      this.date.end &&
+      typeof this.date.end === 'string' &&
+      this.date.end.trim() !== ''
     ) {
-      return true;
+      return true
     }
-    console.log(this);
-    
-    return false;
+    console.log(this)
+
+    return false
   }
-  
 
   // Static method to create a new ModalForm from an object
   static fromObject(obj: modalFormType): ModalForm {
     if (!obj) {
-      console.error("Das übergebene Objekt ist null oder undefined.");
-      return this.getNew(); // Rückgabe eines leeren Objekts
+      console.error('Das übergebene Objekt ist null oder undefined.')
+      return this.getNew() // Rückgabe eines leeren Objekts
     }
-    console.log("Objekt empfangen:", obj);
-    console.log("Name:", obj.name);
-    
+    console.log('Objekt empfangen:', obj)
+    console.log('Name:', obj.name)
+
     return new this({
-      name: obj.name || '',
+      name: obj.name ?? '',
       year: obj.year || '',
       companyContent: obj.companyContent || '',
       companyLearnings: obj.companyLearnings || '',
@@ -70,9 +85,8 @@ export default class ModalForm implements modalFormType {
         start: obj.date?.start || '',
         end: obj.date?.end || ''
       }
-    } as modalFormType);
+    } as modalFormType)
   }
-  
 
   // Static method to create a new ModalForm from an array
   static fromArray(arr: Array<string | boolean>): ModalForm {
