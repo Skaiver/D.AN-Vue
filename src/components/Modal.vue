@@ -4,48 +4,53 @@ import EventBus from '@/events/EventBus'
 import { useWeeksStore } from '@/stores/weeks'
 import type { modalFormType } from './interfaces/ModalFormType'
 import ModalForm from '@/components/classes/ModalForm'
+import { MESSAGES } from '@/composables/Messages'
+import WeekIsNotValidError from '@/components/exceptions/WeekIsNotValidError'
+import Toast from '@/components/Toast.vue'
 
 const weekStore = useWeeksStore()
 
 const form: Ref<ModalForm> = ref(ModalForm.getNew())
 const dialog: Ref<HTMLDialogElement | null> = ref(null)
+const wrongFields = ref<string[]>([])
 
 EventBus.on('Modal.loadDialog', (week: modalFormType) => {
-    console.log('loading:', week)
-    // form.value.name = week.name
-    // form.value.year = week.year
-    // form.value.companyContent = week.companyContent
-    // form.value.companyLearnings = week.companyLearnings
-    // form.value.schoolContent = week.schoolContent
-    // form.value.date = week.date
-    // form.value.isDone = week.isDone
-    // form.value.date['start'] = week.date.start
-    // form.value.date['end'] = week.date.end
-
-    // Dynamische Zuweisung der Werte aus week zu form.value
-    Object.keys(ModalForm.getNew()).forEach((key) => {
-      if (key !== 'date') {
-        // Direkte Zuweisung für einfache Felder
-        (form.value as any)[key] = (week as any)[key];
-      } else {
-        // Spezielle Behandlung für das date-Objekt
-        form.value.date = { ...week.date } // Kopiere das date-Objekt
-        form.value.date.start = week.date.start
-        form.value.date.end = week.date.end
-      }
-    })
+  console.log('loading:', week)
+  // Dynamische Zuweisung der Werte aus week zu form.value
+  Object.keys(ModalForm.getNew()).forEach((key) => {
+    if (key !== 'date') {
+      // Direkte Zuweisung für einfache Felder
+      ;(form.value as any)[key] = (week as any)[key]
+    } else {
+      // Spezielle Behandlung für das date-Objekt
+      form.value.date = { ...week.date } // Kopiere das date-Objekt
+      form.value.date.start = week.date.start
+      form.value.date.end = week.date.end
+    }
   })
+})
 
-  EventBus.on('Modal.openDialog', () => {
-    dialog.value?.showModal()
-  })
+EventBus.on('Modal.openDialog', () => {
+  dialog.value?.showModal()
+})
 
-  EventBus.on('Modal.closeDialog', () => {
-    dialog.value?.close()
-  })
+EventBus.on('Modal.closeDialog', () => {
+  dialog.value?.close()
+})
 
-function saveWeek(week: ModalForm) {
-  weekStore.storeWeek(week)
+function saveWeek(week: ModalForm): boolean {
+  try {
+    weekStore.storeWeek(week)
+    return true
+  } catch (e) {
+    if (e instanceof WeekIsNotValidError) {
+      wrongFields.value = e.getWrongFields()
+      console.warn(MESSAGES.WEEK_IS_NOT_VALID, e.getWrongFields())
+    } else {
+      console.error(MESSAGES.WEEK_IS_NOT_VALID, e)
+    }
+    return false
+  }
 }
 
 function closeModal() {
@@ -53,14 +58,16 @@ function closeModal() {
 }
 
 function triggerSave() {
-  saveWeek(form.value)
-  closeModal()
-  EventBus.trigger('DashboardView.forceRerender', null)
+  if (saveWeek(form.value)) {
+    closeModal()
+    EventBus.trigger('DashboardView.forceRerender', null)
+  }
 }
 </script>
 
 <template>
   <dialog ref="dialog">
+    <Toast :messages="wrongFields" />
     <h2>Ausbildungsnachweis (Wöchentlich)</h2>
 
     <div class="first-row">
@@ -170,7 +177,8 @@ function triggerSave() {
 
 dialog {
   --border-radius: 3px;
-  height: 80%;
+  /* height: 80%; */
+  padding-bottom: 2rem;
   width: 80%;
   margin: 5% auto auto;
   background-color: #2f405b;

@@ -7,7 +7,7 @@ export function getStoredData() {
   }
 
   if (!window.localStorage.getItem('d-an')) {
-    console.error('b')
+    throw new Error('device does not have settings db: "d-an"')
   }
 
   const data = window.localStorage.getItem('d-an');

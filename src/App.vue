@@ -1,17 +1,29 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
-import { onBeforeUpdate, onMounted, ref } from 'vue'
+import { onBeforeMount, onMounted, ref } from 'vue'
 import { getStoredSettings } from '@/composables/getStoredSettings'
+import { initStorages } from '@/composables/initStorages'
+import { MESSAGES } from '@/composables/Messages'
 
 const name = ref('')
 const hasName = ref(false)
 
+onBeforeMount(() => {
+  try {
+    initStorages()
+    console.log("init done");
+  } catch (e) {
+    console.log("init error");
+    console.error(MESSAGES.CANNOT_INIT_STORAGES)
+  }
+})
+
 onMounted(() => {
   try {
-    const rawSettings = getStoredSettings()
+    let rawSettings = getStoredSettings()
     const settings = JSON.parse(rawSettings)
     name.value = settings.name.length >= 1 ? settings.name : 'Du'
-    hasName.value = true;
+    hasName.value = true
   } catch (e) {
     name.value = 'du'
   }
@@ -22,12 +34,14 @@ onMounted(() => {
   <header>
     <div class="message">
       <h2 v-if="hasName">Hallo {{ name }}</h2>
-      <h2 v-else class="tooltip">Hallo {{ name }} <span class="tooltiptext">Änderbar in den Einstellungen 👍</span></h2>
+      <h2 v-else class="tooltip">
+        Hallo {{ name }} <span class="tooltiptext">Änderbar in den Einstellungen 👍</span>
+      </h2>
       <p>Hier sind deine Ausbildungsnachweise</p>
     </div>
 
     <nav>
-      <RouterLink to="/">Dashbaord</RouterLink>
+      <RouterLink to="/">Dashboard</RouterLink>
       <RouterLink to="/export">Export</RouterLink>
       <RouterLink to="/import">Import</RouterLink>
       <RouterLink to="/settings">Settings</RouterLink>

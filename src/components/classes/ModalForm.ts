@@ -1,4 +1,5 @@
 import type { modalFormType } from '../interfaces/ModalFormInterface'
+import WeekIsNotValidError from '@/components/exceptions/WeekIsNotValidError'
 
 export default class ModalForm implements modalFormType {
   name: string
@@ -34,35 +35,31 @@ export default class ModalForm implements modalFormType {
     } as modalFormType)
   }
 
-  isValid() {
-    if (
-      this.name &&
-      typeof this.name === 'string' &&
-      this.name.trim() !== '' &&
-      this.year &&
-      typeof this.year === 'number' &&
-      this.companyContent &&
-      typeof this.companyContent === 'string' &&
-      this.companyContent.trim() !== '' &&
-      this.companyLearnings &&
-      typeof this.companyLearnings === 'string' &&
-      this.companyLearnings.trim() !== '' &&
-      this.schoolContent &&
-      typeof this.schoolContent === 'string' &&
-      this.schoolContent.trim() !== '' &&
-      this.date &&
-      this.date.start &&
-      typeof this.date.start === 'string' &&
-      this.date.start.trim() !== '' &&
-      this.date.end &&
-      typeof this.date.end === 'string' &&
-      this.date.end.trim() !== ''
-    ) {
-      return true
+  isValid(): boolean {
+    const wrongFields: string[] = [];
+    const requiredFields: { key: string; validate: (value: any) => boolean }[] = [
+      { key: 'name', validate: v => typeof v === 'string' && v.trim() !== '' },
+      { key: 'year', validate: v => typeof v === 'number' },
+      { key: 'companyContent', validate: v => typeof v === 'string' && v.trim() !== '' },
+      { key: 'companyLearnings', validate: v => typeof v === 'string' && v.trim() !== '' },
+      { key: 'schoolContent', validate: v => typeof v === 'string' && v.trim() !== '' },
+      { key: 'date.start', validate: v => typeof v === 'string' && v.trim() !== '' },
+      { key: 'date.end', validate: v => typeof v === 'string' && v.trim() !== '' },
+    ];
+  
+    for (const { key, validate } of requiredFields) {
+      const value = key
+        .split('.')
+        .reduce((obj: any, prop) => obj?.[prop], this);
+      if (!validate(value)) {
+        wrongFields.push(key);
+      }
     }
-    console.log(this)
-
-    return false
+  
+    if (wrongFields.length !== 0) {
+      throw new WeekIsNotValidError('Week is invalid. Cannot store invalid week', wrongFields)
+    }
+    return true;
   }
 
   // Static method to create a new ModalForm from an object

@@ -3,6 +3,7 @@ import { defineStore } from 'pinia'
 import { hasWorkingStorage } from '@/composables/hasWorkingStorage'
 import type WeekInterface from '@/components/interfaces/WeekInterface'
 import type ModalForm from '@/components/classes/ModalForm'
+import { MESSAGES } from '@/composables/Messages'
 
 export const useWeeksStore = defineStore('weeks', () => {
   const useLocalStorage = hasWorkingStorage('localStorage')
@@ -38,7 +39,7 @@ export const useWeeksStore = defineStore('weeks', () => {
       throw new Error('Cannot store invalid week')
     }
     if (!isValidWeek(week)) {
-      throw new Error('Week is invalid. Cannot store invalid week')
+      console.warn(MESSAGES.WEEK_IS_NOT_VALID)
     }
 
     // if is duplicate
