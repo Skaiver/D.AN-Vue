@@ -11,38 +11,38 @@ const form: Ref<ModalForm> = ref(ModalForm.getNew())
 const dialog: Ref<HTMLDialogElement | null> = ref(null)
 
 EventBus.on('Modal.loadDialog', (week: modalFormType) => {
-    console.log('loading:', week)
-    // form.value.name = week.name
-    // form.value.year = week.year
-    // form.value.companyContent = week.companyContent
-    // form.value.companyLearnings = week.companyLearnings
-    // form.value.schoolContent = week.schoolContent
-    // form.value.date = week.date
-    // form.value.isDone = week.isDone
-    // form.value.date['start'] = week.date.start
-    // form.value.date['end'] = week.date.end
+  console.log('loading:', week)
+  // form.value.name = week.name
+  // form.value.year = week.year
+  // form.value.companyContent = week.companyContent
+  // form.value.companyLearnings = week.companyLearnings
+  // form.value.schoolContent = week.schoolContent
+  // form.value.date = week.date
+  // form.value.isDone = week.isDone
+  // form.value.date['start'] = week.date.start
+  // form.value.date['end'] = week.date.end
 
-    // Dynamische Zuweisung der Werte aus week zu form.value
-    Object.keys(ModalForm.getNew()).forEach((key) => {
-      if (key !== 'date') {
-        // Direkte Zuweisung für einfache Felder
-        (form.value as any)[key] = (week as any)[key];
-      } else {
-        // Spezielle Behandlung für das date-Objekt
-        form.value.date = { ...week.date } // Kopiere das date-Objekt
-        form.value.date.start = week.date.start
-        form.value.date.end = week.date.end
-      }
-    })
+  // Dynamische Zuweisung der Werte aus week zu form.value
+  Object.keys(ModalForm.getNew()).forEach((key) => {
+    if (key !== 'date') {
+      // Direkte Zuweisung für einfache Felder
+      ;(form.value as any)[key] = (week as any)[key]
+    } else {
+      // Spezielle Behandlung für das date-Objekt
+      form.value.date = { ...week.date } // Kopiere das date-Objekt
+      form.value.date.start = week.date.start
+      form.value.date.end = week.date.end
+    }
   })
+})
 
-  EventBus.on('Modal.openDialog', () => {
-    dialog.value?.showModal()
-  })
+EventBus.on('Modal.openDialog', () => {
+  dialog.value?.showModal()
+})
 
-  EventBus.on('Modal.closeDialog', () => {
-    dialog.value?.close()
-  })
+EventBus.on('Modal.closeDialog', () => {
+  dialog.value?.close()
+})
 
 function saveWeek(week: ModalForm) {
   weekStore.storeWeek(week)
@@ -182,6 +182,11 @@ dialog {
     --border-radius: 7px;
     width: 90%;
   }
+
+  .first-row > div,
+  .second-row > div {
+    margin-bottom: 1rem;
+  }
 }
 
 dialog h2 {
@@ -206,7 +211,7 @@ dialog input {
   width: 95%;
   margin-bottom: 0.2rem;
   border: 1px solid black;
-  padding: 5px 7px;
+  padding: 5px 10px;
   border-radius: var(--border-radius);
   background-color: #2f405b;
   border: 2px solid #6f7fa5;
@@ -226,6 +231,10 @@ dialog textarea {
   padding: 2px;
   border-radius: var(--border-radius);
   border: 2px solid #6f7fa5;
+  padding: 5px 7px;
+  &::placeholder {
+    color: white;
+  }
 }
 
 .first-row {

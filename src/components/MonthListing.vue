@@ -25,7 +25,9 @@ async function saveAsPdf(week: any) {
 
   const pdfHelper = new PDFHelper()
   const template = await pdfHelper.loadTemplate()
-  pdfHelper.createFile(template, modalForm)
+  console.log(modalForm);
+  
+  await pdfHelper.createFile(template, modalForm)
 }
 
 function formatDate(s: string) {

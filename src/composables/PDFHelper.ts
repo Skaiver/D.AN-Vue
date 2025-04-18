@@ -50,6 +50,7 @@ export default class PDFHelper {
     this._initPDFDocumentFields(pdfDoc).then((pdfDoc) => {
       console.log('beep: ')
       console.log(args)
+      console.log(args.companyContent)
 
       pdfDoc.getForm().getTextField('reportbook.apprentice_name').setText(args.name)
       pdfDoc.getForm().getTextField('reportbook.training_year').setText(args.year.toString())
